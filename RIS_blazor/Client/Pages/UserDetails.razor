@@ -1,0 +1,50 @@
+﻿@page "/users"
+@using RIS_blazor.Shared.Models
+@inject HttpClient Http
+
+<h3>UserDetails</h3>
+<p>Blazor CRUD operation</p>
+
+@if (userList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped align-middle table-bordered">
+        <thead class="table-success">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Cell No</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in userList)
+            {
+                <tr>
+                    <td>@user.UserId</td>
+                    <td>@user.FullName</td>
+                    <td>@user.MobileNo</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+
+@code {
+    protected List<User> userList = new();
+    protected List<User> searchUserData = new();
+    protected User user = new();
+    protected string SearchString { get; set; } = string.Empty;
+    protected override async Task OnInitializedAsync()
+    {
+        await GetUser();
+    }
+    protected async Task GetUser()
+    {
+        userList = await Http.GetFromJsonAsync<List<User>>("api/Riswork/GetAllUsers");
+        searchUserData = userList;
+    }
+}
