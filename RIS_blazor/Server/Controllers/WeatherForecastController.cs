@@ -1,5 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using RIS_blazor.Shared;
+using RIS_blazor.Shared.Models;
+using RIS_blazor.Server.Services;
+using RIS_blazor.Server.Models;
+
 
 namespace RIS_blazor.Server.Controllers
 {
@@ -13,6 +17,8 @@ namespace RIS_blazor.Server.Controllers
     };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly CoreDbContext _context;
+
 
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
@@ -30,5 +36,18 @@ namespace RIS_blazor.Server.Controllers
             })
             .ToArray();
         }
+
+        [HttpGet("GetUser")]
+        public async Task<List<User>> GetAllUser()
+        {
+            return await new RISService(_context).GetAllUser();
+        }
+
+        [HttpGet("get")]
+        public string get()
+        {
+            return "sdf";
+        }
+
     }
 }

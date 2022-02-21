@@ -44,7 +44,8 @@ else
     }
     protected async Task GetUser()
     {
-        userList = await Http.GetFromJsonAsync<List<User>>("api/Riswork/GetAllUsers");
+        userList = await Http.GetFromJsonAsync<List<User>>("Riswork/GetUser");
+        //userList = await Http.GetFromJsonAsync<List<User>>("GetAllUsers");
         searchUserData = userList;
     }
 }

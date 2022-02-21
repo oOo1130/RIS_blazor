@@ -6,17 +6,28 @@ using RIS_blazor.Server.Services;
 
 namespace RIS_blazor.Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class RisworkController : ControllerBase
     {
         private readonly ILogger<RisworkController> _logger;
         private readonly CoreDbContext _context;
-        public RisworkController(CoreDbContext context, ILogger<RisworkController> logger)
+        public RisworkController(ILogger<RisworkController> logger)
         {
             _logger = logger;
-            _context = context;
+        }
 
+
+        [HttpGet("GetUser")]
+        public async Task<List<User>> GetAllUser()
+        {
+            return await new RISService(_context).GetAllUser();
+        }
+
+        [HttpGet("get")]
+        public string get()
+        {
+            return "sdf";
         }
 
 
@@ -524,12 +535,6 @@ namespace RIS_blazor.Server.Controllers
         //{
         //    return await (new RISService(_context).GetAllTenants());
         //}
-
-        [HttpGet("GetAllUsers")]
-        public List<User> GetAllUser()
-        {
-            return new RISService(_context).GetAllUser();
-        }
 
     }
 }
