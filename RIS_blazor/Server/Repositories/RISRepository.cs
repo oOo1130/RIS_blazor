@@ -1,14 +1,13 @@
 ﻿using RIS_blazor.Server.Models;
 using RIS_blazor.Shared.Models;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;    
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using RIS_blazor.Shared.Models;
 using RIS_blazor.Shared.Models.ApiModel;
 using RIS_blazor.Shared.Models.VWModels;
+//using RIS_blazor.Server.Models;
 using RIS_blazor.Server.Repository.ServiceObjects;
 using System;
 using System.Collections.Generic;
@@ -36,11 +35,14 @@ namespace RIS_blazor.Server.Repositories
 
         internal async Task<List<User>> GetAllUser()
         {
-            using (CoreDbContext context = new CoreDbContext())
+            try
             {
-                List<User> users = new List<User>();
-                users = await context.Users.ToListAsync();
-                return users;
+                return await _context.Users.ToListAsync();
+            }
+            catch(Exception ex)
+            {
+                Console.Write(ex.Message);
+                return null;
             }
         }
 
@@ -1452,12 +1454,8 @@ namespace RIS_blazor.Server.Repositories
         internal async Task<IList<VMUserDetail>> GetUserDetails()
         {
 
-            using (CoreDbContext context = new CoreDbContext())
-            {
-                IList<VMUserDetail> val = await context.VMUserDetails.FromSqlRaw<VMUserDetail>(@"Select u.UserId,u.LoginName,u.CloudUserName,u.FullName,u.CloudAccessLink,u.cloudPassword,u.MobileNo,u.RoleId,r.Name as RoleName,u.RCId,u.TenantId,u.Status,u.Comments,u.IsAssignToRadAllow,u.IsMainViewerAlloted,u.IsReportWriteAllow,u.IsReportViewAllow from Users u Join Roles r on u.RoleId = r.RoleId").ToListAsync();
+                IList<VMUserDetail> val = await _context.VMUserDetails.FromSqlRaw<VMUserDetail>(@"Select u.UserId,u.LoginName,u.CloudUserName,u.FullName,u.CloudAccessLink,u.cloudPassword,u.MobileNo,u.RoleId,r.Name as RoleName,u.RCId,u.TenantId,u.Status,u.Comments,u.IsAssignToRadAllow,u.IsMainViewerAlloted,u.IsReportWriteAllow,u.IsReportViewAllow from Users u Join Roles r on u.RoleId = r.RoleId").ToListAsync();
                 return val;
-
-            }
         }
 
         internal bool MapUserWithRole(UserRole urole)

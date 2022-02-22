@@ -1,15 +1,20 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using RIS_blazor.Shared.Models
+@using RIS_blazor.Shared.Models.VWModels
+@using RIS_blazor.Shared.Models.ApiModel
+@inject HttpClient Http
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">RIS_blazor</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon">1111</span>
         </button>
     </div>
 </div>
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
-        <div class="nav-item px-3">
+       @* <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
@@ -23,27 +28,67 @@
             <NavLink class="nav-link" href="fetchdata">
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
             </NavLink>
-        </div>
+        </div>*@
+        @if (menuItems == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            @foreach(MenuItem item in menuItems)
+            {
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href=@item.menuTo>
+                        <span class="oi oi-list-rich" aria-hidden="true"></span>@item.menuTitle
+                    </NavLink>
+                </div>
+            }
+        }
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="users">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> User Details
+            <NavLink class="nav-link" @onclick="()=>expandSubNav = !expandSubNav">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Setting
             </NavLink>
+            @if (expandSubNav)
+            {
+                <NavLink class="nav-link" href="user">
+                    <span class="oi oi-list-man" aria-hidden="true"></span> Create User
+                </NavLink>
+                <NavLink class="nav-link" href="role">
+                    <span class="oi oi-list-man" aria-hidden="true"></span> Create Role
+                </NavLink>
+                <NavLink class="nav-link" href="tenant">
+                    <span class="oi oi-list-man" aria-hidden="true"></span> Add/Edit Tenant
+                </NavLink>
+                <NavLink class="nav-link" href="consultant">
+                    <span class="oi oi-list-man" aria-hidden="true"></span> Add/Edit Consultant
+                </NavLink>
+            }
+                </div>
+            </nav>
         </div>
-    </nav>
-</div>
 
 @code {
-    private bool collapseNavMenu = true;
 
+
+    private bool collapseNavMenu = true;
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    protected List<MenuItem>? menuItems = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetMenuItems();
+    }
 
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
     }
 
-    private async Task GetMenuItem()
+    private bool expandSubNav;
+
+
+    private async Task GetMenuItems()
     {
-        
+        menuItems = await Http.GetFromJsonAsync<List<MenuItem>>("Riswork/GetMenuItems");
     }
 }

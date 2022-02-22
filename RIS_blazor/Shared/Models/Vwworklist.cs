@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
 namespace RIS_blazor.Shared.Models
 {
-    //[Keyless]
+    [Keyless]
     public partial class Vwworklist
     {
         public int ProcId { get; set; }

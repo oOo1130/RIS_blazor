@@ -14,9 +14,9 @@ namespace RIS_blazor.Shared.Models
         [Column("RCId")]
         public int RCId { get; set; }
         [StringLength(250)]
-        public string TemplateName { get; set; }
+        public string? TemplateName { get; set; }
 
         [Column(TypeName = "ntext")]
-        public string TemplateContent { get; set; }
+        public string? TemplateContent { get; set; }
     }
 }

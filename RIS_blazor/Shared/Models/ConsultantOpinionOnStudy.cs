@@ -17,13 +17,13 @@ namespace RIS_blazor.Shared.Models
         [ForeignKey("ReportConsultant")]
         public int RCId { get; set; }
         public DateTime OpDate { get; set; }
-        public string OpTime { get; set; }
-        public string ReportContent { get; set; }
+        public string? OpTime { get; set; }
+        public string? ReportContent { get; set; }
   
         public bool isReportComplete { get; set; }
 
-        public RISWorkList RISWorkList { get; set; }
+        public RISWorkList? RISWorkList { get; set; }
 
-        public ReportConsultant ReportConsultant { get; set; }
+        public ReportConsultant? ReportConsultant { get; set; }
     }
 }

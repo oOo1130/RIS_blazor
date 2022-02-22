@@ -9,7 +9,7 @@ namespace RIS_blazor.Shared.Models
     public class ReferralPhysician
     {
         public int Id { get; set; }
-        public string ReferralName { get; set; }
+        public string? ReferralName { get; set; }
         public int TenantId { get; set; }
     }
 }

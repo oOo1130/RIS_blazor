@@ -10,7 +10,7 @@ namespace RIS_blazor.Shared.Models
     public partial class MenuItem
     {
         public int id { get; set; }
-        public string menuTitle { get; set; }
-        public string menuTo { get; set; }
+        public string? menuTitle { get; set; }
+        public string? menuTo { get; set; }
     }
 }

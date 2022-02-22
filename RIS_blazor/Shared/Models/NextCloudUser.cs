@@ -14,13 +14,13 @@ namespace RIS_blazor.Shared.Models
         [Key]
         public int CloudUserId { get; set; }
         [StringLength(64)]
-        public string GroupName { get; set; }
+        public string? GroupName { get; set; }
         [StringLength(64)]
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
         [StringLength(64)]
         public bool ShareStatus { get; set; }
         [StringLength(250)]
-        public string FileName { get; set; }
+        public string? FileName { get; set; }
         public int Share_id { get; set; }
 
 

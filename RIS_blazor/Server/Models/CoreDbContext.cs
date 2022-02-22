@@ -26,10 +26,7 @@ namespace RIS_blazor.Server.Models
 
         }
 
-
         public String ConnectionString { get; set; }
-
-        public virtual DbSet<User> Users { get; set; }
 
         public virtual DbSet<AllowedModality> AllowedModalities { get; set; }
         public virtual DbSet<DatabaseDataset> DatabaseDatasets { get; set; }
@@ -52,7 +49,7 @@ namespace RIS_blazor.Server.Models
         public virtual DbSet<ShortCutKey> ShortCutKeys { get; set; }
         public virtual DbSet<Tenant> Tenants { get; set; }
         public virtual DbSet<TenantDefaultConsultantMapping> TenantDefaultConsultantMappings { get; set; }
-        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<MenuItem> MenuItems { get; set; }
 
@@ -96,84 +93,84 @@ namespace RIS_blazor.Server.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<DatabaseDataset>(entity =>
-            //{
-            //    entity.HasKey(e => e.DatasetId)
-            //        .HasName("PK__DatabaseDatasets__0000000000000030");
-            //});
+            modelBuilder.Entity<DatabaseDataset>(entity =>
+            {
+                entity.HasKey(e => e.DatasetId)
+                    .HasName("PK__DatabaseDatasets__0000000000000030");
+            });
 
-            //modelBuilder.Entity<ProjectMenu>(entity =>
-            //{
-            //    entity.HasKey(e => e.MenuId)
-            //        .HasName("PK_Menu");
-            //});
+            modelBuilder.Entity<ProjectMenu>(entity =>
+            {
+                entity.HasKey(e => e.MenuId)
+                    .HasName("PK_Menu");
+            });
 
-            //modelBuilder.Entity<RadiologistOpinionTwo>(entity =>
-            //{
-            //    entity.HasKey(e => e.OpId)
-            //        .HasName("PK_RadiologistOpinionTwos");
-            //});
+            modelBuilder.Entity<RadiologistOpinionTwo>(entity =>
+            {
+                entity.HasKey(e => e.OpId)
+                    .HasName("PK_RadiologistOpinionTwos");
+            });
 
-            //modelBuilder.Entity<VMHISModalityProcedureMapping>(entity =>
-            //{
-            //    entity.HasNoKey();
-            //});
+            modelBuilder.Entity<VMHISModalityProcedureMapping>(entity =>
+            {
+                entity.HasNoKey();
+            });
 
-            //modelBuilder.Entity<VMRISWorklist>(entity =>
-            //{
-            //    entity.HasNoKey();
-            //});
+            modelBuilder.Entity<VMRISWorklist>(entity =>
+            {
+                entity.HasNoKey();
+            });
 
-            //modelBuilder.Entity<SelectedProcedureForAssign>(entity =>
-            //{
-            //    entity.HasNoKey();
-            //});
+            modelBuilder.Entity<SelectedProcedureForAssign>(entity =>
+            {
+                entity.HasNoKey();
+            });
 
-            //modelBuilder.Entity<VMRadProcTemplate>(entity =>
-            //{
-            //    entity.HasNoKey();
-            //});
+            modelBuilder.Entity<VMRadProcTemplate>(entity =>
+            {
+                entity.HasNoKey();
+            });
 
-            //modelBuilder.Entity<VMRemoteDicomNode>(entity =>
-            //{
-            //    entity.HasNoKey();
-            //});
+            modelBuilder.Entity<VMRemoteDicomNode>(entity =>
+            {
+                entity.HasNoKey();
+            });
 
-            //modelBuilder.Entity<VMReportObj>(entity =>
-            //{
-            //    entity.HasNoKey();
-            //});
+            modelBuilder.Entity<VMReportObj>(entity =>
+            {
+                entity.HasNoKey();
+            });
 
-            //modelBuilder.Entity<VMTenantRadiologistMapping>(entity =>
-            //{
-            //    entity.HasNoKey();
-            //});
+            modelBuilder.Entity<VMTenantRadiologistMapping>(entity =>
+            {
+                entity.HasNoKey();
+            });
 
-            //modelBuilder.Entity<VMUserDetail>(entity =>
-            //{
-            //    entity.HasNoKey();
-            //});
+            modelBuilder.Entity<VMUserDetail>(entity =>
+            {
+                entity.HasNoKey();
+            });
 
 
-            //modelBuilder.Entity<RemoteDicomNode>(entity =>
-            //{
-            //    entity.Property(e => e.NodeGuid).ValueGeneratedNever();
-            //});
+            modelBuilder.Entity<RemoteDicomNode>(entity =>
+            {
+                entity.Property(e => e.NodeGuid).ValueGeneratedNever();
+            });
 
-            //modelBuilder.Entity<VwradReportOpinion>(entity =>
-            //{
-            //    entity.ToView("VWRadReportOpinions");
-            //});
+            modelBuilder.Entity<VwradReportOpinion>(entity =>
+            {
+                entity.ToView("VWRadReportOpinions");
+            });
 
-            //modelBuilder.Entity<Vwworklist>(entity =>
-            //{
-            //    entity.ToView("VWWorklist");
-            //});
+            modelBuilder.Entity<Vwworklist>(entity =>
+            {
+                entity.ToView("VWWorklist");
+            });
 
-            //modelBuilder.Entity<VMReportConsultant>(entity =>
-            //{
-            //    entity.HasNoKey();
-            //});
+            modelBuilder.Entity<VMReportConsultant>(entity =>
+            {
+                entity.HasNoKey();
+            });
 
             OnModelCreatingPartial(modelBuilder);
         }

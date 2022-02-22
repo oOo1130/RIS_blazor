@@ -10,7 +10,7 @@ namespace RIS.Models
     {
         public int Id { get; set; }
         public int RCId { get; set; }
-        public string snippetname { get; set; }
-        public string snippettext { get; set; }
+        public string? snippetname { get; set; }
+        public string? snippettext { get; set; }
     }
 }

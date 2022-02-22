@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.ResponseCompression;
+using RIS_blazor.Server.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<CoreDbContext>();
 
 var app = builder.Build();
 

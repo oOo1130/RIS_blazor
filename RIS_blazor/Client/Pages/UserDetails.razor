@@ -1,4 +1,4 @@
-﻿@page "/users"
+﻿@page "/userdetail"
 @using RIS_blazor.Shared.Models
 @inject HttpClient Http
 
@@ -34,8 +34,8 @@ else
 }
 
 @code {
-    protected List<User> userList = new();
-    protected List<User> searchUserData = new();
+    protected List<User>? userList = new();
+    protected List<User>? searchUserData = new();
     protected User user = new();
     protected string SearchString { get; set; } = string.Empty;
     protected override async Task OnInitializedAsync()
@@ -45,7 +45,6 @@ else
     protected async Task GetUser()
     {
         userList = await Http.GetFromJsonAsync<List<User>>("Riswork/GetUser");
-        //userList = await Http.GetFromJsonAsync<List<User>>("GetAllUsers");
         searchUserData = userList;
     }
 }

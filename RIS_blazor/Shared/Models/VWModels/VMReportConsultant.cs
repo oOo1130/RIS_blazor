@@ -10,9 +10,9 @@ namespace RIS_blazor.Shared.Models.VWModels
     public class VMReportConsultant
     {
         public int RCId { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [Column(TypeName = "nvarchar(50)")]
-        public string RadNextCloudID { get; set; }
+        public string? RadNextCloudID { get; set; }
     }
 }

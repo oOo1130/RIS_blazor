@@ -9,9 +9,9 @@ namespace RIS_blazor.Server.Utility
 {
     public static class Utils
     {
-        static string sql = string.Empty;
-        static SqlConnection con;
-        static SqlCommand cmd;
+        //static string sql = string.Empty;
+        //static SqlConnection con;
+        //static SqlCommand cmd;
 
         //static string _server = @"115.69.214.82;";
         static string _server = @"EMSL;";

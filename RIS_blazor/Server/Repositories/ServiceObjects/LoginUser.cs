@@ -11,12 +11,12 @@ namespace RIS_blazor.Server.Repository.ServiceObjects
     {
         public int UserId { get; set; }
         public int RoleId { get; set; }
-        public string Name { get; set; }
-        public string Password { get; set; }
-        public string Salt { get; set; }
-        public string RoleName { get; set; }
+        public string? Name { get; set; }
+        public string? Password { get; set; }
+        public string? Salt { get; set; }
+        public string? RoleName { get; set; }
 
-        public string ReportCreateLocation { get; set; }
+        public string? ReportCreateLocation { get; set; }
 
 
         public bool IsAssignToRadAllow { get; set; }
