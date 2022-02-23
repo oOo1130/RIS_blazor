@@ -517,6 +517,9 @@ namespace RIS_blazor.Server.Services
         {
             return await new RISRepository(_context).GetAllUser();
         }
-
+        internal bool DeleteUser(int id)
+        {
+            return new RISRepository(_context).DeleteUser(id);
+        }
     }
 }

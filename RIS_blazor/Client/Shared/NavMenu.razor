@@ -7,28 +7,13 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="">RIS_blazor</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon">1111</span>
+            <span class="navbar-toggler-icon"></span>
         </button>
     </div>
 </div>
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
-       @* <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </div>*@
         @if (menuItems == null)
         {
             <p><em>Loading...</em></p>
@@ -37,35 +22,35 @@
         {
             @foreach(MenuItem item in menuItems)
             {
-                <div class="nav-item px-3">
+                <div class="nav-item py-0">
                     <NavLink class="nav-link" href=@item.menuTo>
                         <span class="oi oi-list-rich" aria-hidden="true"></span>@item.menuTitle
                     </NavLink>
                 </div>
             }
         }
-        <div class="nav-item px-3">
+        <div class="nav-item py-0">
             <NavLink class="nav-link" @onclick="()=>expandSubNav = !expandSubNav">
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Setting
             </NavLink>
             @if (expandSubNav)
             {
-                <NavLink class="nav-link" href="user">
+                <NavLink class="nav-link" style="margin-top:0; margin-bottom:0;" href="user">
                     <span class="oi oi-list-man" aria-hidden="true"></span> Create User
                 </NavLink>
-                <NavLink class="nav-link" href="role">
+                <NavLink class="nav-link" style="margin-top:0; margin-bottom:0;" href="role">
                     <span class="oi oi-list-man" aria-hidden="true"></span> Create Role
                 </NavLink>
-                <NavLink class="nav-link" href="tenant">
+                <NavLink class="nav-link" style="margin-top:0; margin-bottom:0;" href="tenant">
                     <span class="oi oi-list-man" aria-hidden="true"></span> Add/Edit Tenant
                 </NavLink>
-                <NavLink class="nav-link" href="consultant">
+                <NavLink class="nav-link" style="margin-top:0; margin-bottom:0;" href="consultant">
                     <span class="oi oi-list-man" aria-hidden="true"></span> Add/Edit Consultant
                 </NavLink>
             }
-                </div>
-            </nav>
         </div>
+    </nav>
+</div>
 
 @code {
 

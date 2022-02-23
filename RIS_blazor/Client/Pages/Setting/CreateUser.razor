@@ -1,0 +1,277 @@
+﻿@page "/user"
+@using RIS_blazor.Shared.Models
+@using RIS_blazor.Shared.Models.VWModels
+@using RIS_blazor.Shared.Models.ApiModel
+@using RIS_blazor.Shared.Repositories
+@inject HttpClient Http
+
+<h3>Role Detail</h3>
+
+@if (users == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <EditForm Model="@user" OnValidSubmit="SaveUser">
+        <DataAnnotationsValidator />
+        <div class="row my-3">
+            <div class=" col-md-6 row">
+                <label for="Name" class="form-label col-md-5 fs-5">User Name</label>
+                <div class="col-md-7 px-3">
+                    <InputText class="form-control" @bind-Value="user.LoginName" />
+                </div>
+                <ValidationMessage For="@(() => user.LoginName)" />
+            </div>
+            <div class=" col-md-6 row">
+                <label for="FullName" class="form-label col-md-5 fs-5">Full Name</label>
+                <div class="col-md-7">
+                    <InputText class="form-control" @bind-Value="user.FullName" />
+                </div>
+                <ValidationMessage For="@(() => user.FullName)" />
+            </div>
+        </div>
+
+        <div class="row my-3">
+            <div class="row col-md-6">
+                <label for="Password" class="form-label col-md-5 fs-5">Password</label>
+                <div class="col-md-4 col-md-7">
+                    <input class="form-control" type="password" @bind-value="password" />
+                </div>
+                <ValidationMessage For="@(() => user.Password)" />
+            </div>
+            <div class="row col-md-6">
+                <label for="Password" class="form-label col-md-5 fs-5 fs-5">Confirm Password</label>
+                <div class="col-md-7">
+                    <input class="form-control" type="password" @bind-value="confirmPassword" />
+                </div>
+                <ValidationMessage For="@(() => confirmPassword)" />
+            </div>
+        </div>
+
+        <div class="row my-3">
+            <div class="col-md-6 row">
+                <label for="MobileNo" class="form-label col-md-5 fs-5">Mobile No</label>
+                <div class="col-md-7">
+                    <InputText class="form-control" @bind-Value="user.MobileNo" />
+                </div>
+                <ValidationMessage For="@(() => user.MobileNo)" />
+            </div>
+            <div class="col-md-6 row">
+                <label for="Role" class="form-label col-md-5 fs-5">User Role</label>
+                <select id="Role" class="col-md-7" @bind="user.RoleId">
+                      <option value="">select role</option>
+                      @foreach (var role in roles)
+                     {
+                         <option value=@role.RoleId>@role.Name</option>
+                     }
+                </select>
+                <ValidationMessage For="@(() => user.RoleId)" />
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class=" col-md-6 row">
+                <label for="Consultant" class="form-label col-md-5 fs-5">Select Consultant</label>
+                @if (user.RoleId == 3) {
+                    unlocker = false; }
+                 else {
+                    unlocker = true;
+                }
+                <select id="Consultant" class="col-md-7" disabled="@unlocker" @bind="user.Rcid">
+                      <option value="">select consultant</option>
+                      @foreach (var consultant in consultants)
+                     {
+                         <option value=@consultant.RCId>@consultant.Name</option>
+                     }
+                </select>
+                <ValidationMessage For="@(() => user.Rcid)" />
+            </div>
+            <div class="col-md-6 row">
+                <label for="Hospital" class="form-label col-md-5 fs-5">Select Hospital</label>
+                <select id="Hospital" class="col-md-7" @bind="user.TenantId">
+                      <option value="">Select Hospital</option>
+                      @foreach (var hospital in hospitals)
+                     {
+                         <option value=@hospital.TenantId>@hospital.Name</option>
+                     }
+                </select>
+                <ValidationMessage For="@(() => user.RoleId)" />
+            </div>
+        </div>
+
+        <p class="text-warning text-center fs-3">Permission:</p>
+
+        <div class="permission row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <div class="row">
+                    <div class="col-md-6 align-content-center">
+                        <InputCheckbox id="IsRad" @bind-Value="user.IsAssignToRadAllow"></InputCheckbox>
+                        <label for="IsRad" class=" fs-5">Assign to Radiologist</label>
+                    </div>
+                    <div class="col-md-6 align-content-center">
+                        <InputCheckbox id="IsView" @bind-Value="user.IsReportViewAllow"></InputCheckbox>
+                        <label for="IsView" class=" fs-5">Report View/Download</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 align-content-center">
+                        <InputCheckbox id="IsEdit" @bind-Value="user.IsReportWriteAllow"></InputCheckbox>
+                        <label for="IsEdit" class=" fs-5">Report Write/Edit</label>
+                    </div>
+                    <div class="col-md-6 align-content-center">
+                        <InputCheckbox id="IsAccess" @bind-Value="user.IsMainViewerAlloted"></InputCheckbox>
+                        <label for="IsAccess" class=" fs-5">Access to Main Viewer</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+
+        <div class="cloud row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <div class="row px-5 mb-2">
+                    <label for="MobileNo" class="form-label col-md-5 fs-5">Cloud Access Link</label>
+                    <div class="col-md-7">
+                        <InputText class="form-control" @bind-Value="user.CloudAccessLink" />
+                    </div>
+                    <ValidationMessage For="@(() => user.CloudAccessLink)" />
+                </div>
+                <div class="row px-5 mb-2">
+                    <label for="CloudUserName" class="form-label col-md-5 fs-5">Cloud User Name</label>
+                    <div class="col-md-7">
+                        <InputText class="form-control" @bind-Value="user.CloudUserName" />
+                    </div>
+                    <ValidationMessage For="@(() => user.CloudUserName)" />
+                </div>
+                <div class="row px-5 mb-2">
+                    <label for="CloudPassword" class="form-label col-md-5 fs-5">Cloud Password</label>
+                    <div class="col-md-7">
+                        <InputText class="form-control" @bind-Value="user.CloudPassword" />
+                    </div>
+                    <ValidationMessage For="@(() => user.CloudPassword)" />
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="form-group d-flex justify-content-center">
+            <button type="submit" class="btn btn-group-sm btn-primary">Create</button>
+            <button type="button" class="btn btn-group-sm btn-primary mx-3" @onclick="deleteUser">Delete</button>
+            <button type="button" class="btn btn-group-sm btn-primary" @onclick="cancelSelectedUser">Cancel</button>
+        </div>
+    </EditForm>
+    <br />
+    <hr />
+    <br />
+    <h3>User List</h3>
+    <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3 table-striped">
+      <thead>
+        <tr class="fw-bolder text-muted">
+            <th class="w-5px">
+                <div class="form-check form-check-sm form-check-custom form-check-solid">
+                    <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=" "
+                    hidden
+                    />
+                </div>
+            </th>
+            <th class="min-w-120px text-center">Login Name</th>
+            <th class="min-w-140px text-center">Full Name</th>
+            <th class="min-w-120px text-center">Role</th>
+            <th class="min-w-120px text-center">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach (var user in users)
+        {
+            <tr key={@user.UserId}>
+                <td>
+                <div class="form-check form-check-sm form-check-custom form-check-solid">
+                    <input id="selectedUSer"  class="form-check-input widget-13-check" type="checkbox" @onchange="@(() => {selectedUserId = user.UserId;})" />
+                </div>
+                </td>
+                <td class="text-center">
+                <p  class="text-dark fw-bolder text-hover-primary fs-6">
+                    @user.UserId
+                </p>
+                </td>
+                <td class="text-center">
+                <p  class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                    @user.FullName
+                </p>
+                </td>
+                <td class="text-center">
+                <p  class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                    @user.RoleName
+                </p>
+                </td>
+                <td class="text-center">
+                <p  class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                    @user.Status
+                </p>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    @inject NavigationManager NavigationManager;
+    protected List<VMUserDetail>? users = new();
+    protected User user = new();
+    private List<Role>? roles = new();
+    private List<VMReportConsultant>? consultants = new();
+    private List<Tenant>? hospitals = new();
+    private string password = string.Empty;
+    private string confirmPassword = string.Empty;
+    private string[] _arr = new string[] { };
+    private bool unlocker  = true;
+    private int selectedUserId;
+
+    public CreateUser()
+    {
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetUsersData();
+    }
+
+    private async Task GetUsersData()
+    {
+        users = await Http.GetFromJsonAsync<List<VMUserDetail>>("Riswork/GetUserDetails");
+        roles = await Http.GetFromJsonAsync<List<Role>>("Riswork/GetRoles");
+        consultants = await Http.GetFromJsonAsync<List<VMReportConsultant>>("Riswork/GetAllRadiologists");
+        hospitals = await Http.GetFromJsonAsync<List<Tenant>>("Riswork/GetAllTenants");
+    }
+
+    protected async Task SaveUser()
+    {
+        if(password == confirmPassword && password != "")
+        {
+            //_arr = HashGenerator.GetPasswordHashAndSalt(password);
+            //user.Password = _arr[0];
+            //user.Salt = _arr[1];
+        }
+
+        user.Status = "Active";
+        await Http.PostAsJsonAsync<User>("Riswork/CreateUser", user);
+        NavigationManager.NavigateTo("user", true);
+    }
+
+    protected void cancelSelectedUser()
+    {
+        NavigationManager.NavigateTo("user", true);
+    }
+
+    protected void deleteUser()
+    {
+        Http.DeleteAsync("Riswork/" + selectedUserId);
+        NavigationManager.NavigateTo("user", true);
+    }
+}

@@ -20,6 +20,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace RIS_blazor.Server.Repositories
 {
@@ -2040,6 +2041,28 @@ namespace RIS_blazor.Server.Repositories
                     Console.Write(ex.Message);
                     return null;
                 }
+            }
+        }
+
+        internal bool DeleteUser(int userId)
+        {
+            try
+            {
+                using (CoreDbContext context = new CoreDbContext())
+                {
+                    User? user = context.Users.Find(userId);
+                    if (user != null)
+                    {
+                        context.Users.Remove(user);
+                        context.SaveChanges();
+                    }
+                }
+                return true;
+            }
+            catch(Exception ex)
+            {
+                Console.Write(ex.Message);
+                return false;
             }
         }
 

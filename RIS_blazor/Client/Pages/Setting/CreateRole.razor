@@ -1,0 +1,64 @@
+﻿@page "/role"
+@using RIS_blazor.Shared.Models
+@using RIS_blazor.Shared.Models.VWModels
+@using RIS_blazor.Shared.Models.ApiModel
+@using RIS_blazor.Shared.Repositories
+@inject HttpClient Http
+
+<h3>Create Role</h3>
+<div class="row">
+    <div class="col-lg-4 mx-3">
+
+    </div>
+    <div class="col-lg-8 mx-3">
+        <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3 table-striped">
+            <thead>
+            <tr class="fw-bolder text-muted">
+                <th class="w-5px">
+                    <div class="form-check form-check-sm form-check-custom form-check-solid">
+                        <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=" "
+                        hidden
+                        />
+                    </div>
+                </th>
+                <th class="min-w-120px text-center">Role Id</th>
+                <th class="min-w-120px text-center">Role Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var role in roles)
+            {
+                <tr key={@role.RoleId}>
+                    <td>
+                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                            <input id="selectedUSer"  class="form-check-input widget-13-check" type="checkbox" @onchange="@(() => {selectedUserId = user.UserId;})" />
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <p  class="text-dark fw-bolder text-hover-primary fs-6">
+                            @role.RoleId
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                            @role.Name
+                        </p>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@code {
+
+    private List<Role>? roles = new();
+    private async Task GetRole()
+    {
+        roles = await Http.GetFromJsonAsync<List<Role>>("Riswork/GetRoles");
+    }
+}

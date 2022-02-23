@@ -121,7 +121,6 @@ namespace RIS_blazor.Server.Controllers
             return new RISService(_context).CreateUser(user);
         }
 
-
         [HttpPost("CancelAssignedToRadiologist")]
         public IActionResult CancelAssignedToRadiologist(List<SelectedProcedureForAssign> _selectedWorklists)
         {
@@ -531,6 +530,12 @@ namespace RIS_blazor.Server.Controllers
         public async Task<List<Tenant>> GetAllTenants()
         {
             return await (new RISService(_context).GetAllTenants());
+        }
+
+        [HttpDelete("{id}")]
+        public bool DeleteUser(int id)
+        {
+            return new RISService(_context).DeleteUser(id);
         }
 
     }
