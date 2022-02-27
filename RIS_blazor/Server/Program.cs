@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.ResponseCompression;
 using RIS_blazor.Server.Models;
+using Syncfusion.Blazor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<CoreDbContext>();
+//builder.Services.AddSyncfusionBlazor(options => { options.IgnoreScriptIsolation = true; });
 
 var app = builder.Build();
 

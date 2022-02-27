@@ -3,6 +3,7 @@
 @using RIS_blazor.Shared.Models.VWModels
 @using RIS_blazor.Shared.Models.ApiModel
 @using RIS_blazor.Shared.Repositories
+@inject NavigationManager NavigationManager;
 @inject HttpClient Http
 
 <h3>Role Detail</h3>
@@ -50,6 +51,7 @@ else
         </div>
 
         <div class="row my-3">
+
             <div class="col-md-6 row">
                 <label for="MobileNo" class="form-label col-md-5 fs-5">Mobile No</label>
                 <div class="col-md-7">
@@ -172,10 +174,10 @@ else
             <th class="w-5px">
                 <div class="form-check form-check-sm form-check-custom form-check-solid">
                     <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=" "
-                    hidden
+                        class="form-check-input"
+                        type="checkbox"
+                        value=" "
+                        hidden
                     />
                 </div>
             </th>
@@ -190,29 +192,29 @@ else
         {
             <tr key={@user.UserId}>
                 <td>
-                <div class="form-check form-check-sm form-check-custom form-check-solid">
-                    <input id="selectedUSer"  class="form-check-input widget-13-check" type="checkbox" @onchange="@(() => {selectedUserId = user.UserId;})" />
-                </div>
+                    <div class="form-check form-check-sm form-check-custom form-check-solid">
+                        <input id="selectedUSer"  class="form-check-input widget-13-check" type="checkbox" @onchange="@(() => {selectedUserId = user.UserId;})" />
+                    </div>
                 </td>
                 <td class="text-center">
-                <p  class="text-dark fw-bolder text-hover-primary fs-6">
-                    @user.UserId
-                </p>
+                    <p  class="text-dark fw-bolder text-hover-primary fs-6">
+                        @user.UserId
+                    </p>
                 </td>
                 <td class="text-center">
-                <p  class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
-                    @user.FullName
-                </p>
+                    <p  class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                        @user.FullName
+                    </p>
                 </td>
                 <td class="text-center">
-                <p  class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
-                    @user.RoleName
-                </p>
+                    <p  class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                        @user.RoleName
+                    </p>
                 </td>
                 <td class="text-center">
-                <p  class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
-                    @user.Status
-                </p>
+                    <p  class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                        @user.Status
+                    </p>
                 </td>
             </tr>
         }
@@ -221,7 +223,6 @@ else
 }
 
 @code {
-    @inject NavigationManager NavigationManager;
     protected List<VMUserDetail>? users = new();
     protected User user = new();
     private List<Role>? roles = new();
@@ -232,10 +233,6 @@ else
     private string[] _arr = new string[] { };
     private bool unlocker  = true;
     private int selectedUserId;
-
-    public CreateUser()
-    {
-    }
 
     protected override async Task OnInitializedAsync()
     {

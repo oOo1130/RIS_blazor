@@ -51,7 +51,7 @@ namespace RIS_blazor.Server.Models
         public virtual DbSet<TenantDefaultConsultantMapping> TenantDefaultConsultantMappings { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
-        public virtual DbSet<MenuItem> MenuItems { get; set; }
+        public virtual DbSet<MainMenuItem> MenuItems { get; set; }
 
         public virtual DbSet<PrintPageSetup> PrintPageSetups { get; set; }
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace RIS_blazor.Shared.Models
 {
     [Table("MenuItems")]
-    public partial class MenuItem
+    public partial class MainMenuItem
     {
         public int id { get; set; }
         public string? menuTitle { get; set; }

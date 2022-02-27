@@ -1,6 +1,6 @@
 ﻿using RIS_blazor.Server.Models;
 using RIS_blazor.Shared.Models;
-using Microsoft.EntityFrameworkCore;    
+using Microsoft.EntityFrameworkCore;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -40,7 +40,7 @@ namespace RIS_blazor.Server.Repositories
             {
                 return await _context.Users.ToListAsync();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.Write(ex.Message);
                 return null;
@@ -183,8 +183,7 @@ namespace RIS_blazor.Server.Repositories
             return await Task.Run(async () =>
             {
                 List<VMRISWorklist> _workListItems;
-                        //using (var conn = new SqlConnection(_context.ConnectionString))
-                        using (var conn = _context.Database.GetDbConnection())
+                using (var conn = _context.Database.GetDbConnection())
                 {
                     try
                     {
@@ -195,8 +194,6 @@ namespace RIS_blazor.Server.Repositories
                             _workListItems = multi.Read<VMRISWorklist>().ToList();
                         }
                         return _workListItems;
-
-
                     }
                     catch (Exception ex)
                     {
@@ -360,8 +357,6 @@ namespace RIS_blazor.Server.Repositories
 
             }
         }
-
-
 
         internal async Task<MasterTemplate> GetWordMasterTemplateContent()
         {
@@ -771,8 +766,8 @@ namespace RIS_blazor.Server.Repositories
             return await Task.Run(async () =>
             {
 
-                        //using (var conn = new SqlConnection(_context.ConnectionString))
-                        using (var conn = _context.Database.GetDbConnection())
+                //using (var conn = new SqlConnection(_context.ConnectionString))
+                using (var conn = _context.Database.GetDbConnection())
                 {
                     List<VMRISWorklist> _workListItems;
                     try
@@ -858,19 +853,19 @@ namespace RIS_blazor.Server.Repositories
 
                     }
 
-                            //try
-                            //{
-                            //    using (var multi = await conn.QueryMultipleAsync("Exec spGetUserListItems_Paging_Filtering " +
-                            //        "@SearchFilter, @PageNo,  @RecsPerPage, @GroupName"
-                            //          , new {GroupName = GroupName, SearchFilter = SearchFilter, PageNo = PageNo, RecsPerPage = RecsPerPage }))
-                            //    {
-                            //        _userListItems = multi.Read<NextCloudUser>().ToList();
-                            //    }
-                            //    return _userListItems;
+                    //try
+                    //{
+                    //    using (var multi = await conn.QueryMultipleAsync("Exec spGetUserListItems_Paging_Filtering " +
+                    //        "@SearchFilter, @PageNo,  @RecsPerPage, @GroupName"
+                    //          , new {GroupName = GroupName, SearchFilter = SearchFilter, PageNo = PageNo, RecsPerPage = RecsPerPage }))
+                    //    {
+                    //        _userListItems = multi.Read<NextCloudUser>().ToList();
+                    //    }
+                    //    return _userListItems;
 
-                            //}
+                    //}
 
-                            catch (Exception ex)
+                    catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
                         return null;
@@ -905,10 +900,10 @@ namespace RIS_blazor.Server.Repositories
                         return _workListItems[0];
 
 
-                                //var resList = context.Database.SqlQuery<int>(@"Exec spGetInCompleteWorklistItems_Cnt @datefrm, @dateto, @roleId,@TenantId, @ConsultantId, @Status,@SearchFilter", new SqlParameter("@datefrm", datefrm), new SqlParameter("@dateto", dateto), new SqlParameter("@roleId", roleId), new SqlParameter("@TenantId", TenantId), new SqlParameter("@ConsultantId", ConsultantId), new SqlParameter("@Status", status), new SqlParameter("@SearchFilter", SearchFilter)).ToList();
-                                //return resList[0];
+                        //var resList = context.Database.SqlQuery<int>(@"Exec spGetInCompleteWorklistItems_Cnt @datefrm, @dateto, @roleId,@TenantId, @ConsultantId, @Status,@SearchFilter", new SqlParameter("@datefrm", datefrm), new SqlParameter("@dateto", dateto), new SqlParameter("@roleId", roleId), new SqlParameter("@TenantId", TenantId), new SqlParameter("@ConsultantId", ConsultantId), new SqlParameter("@Status", status), new SqlParameter("@SearchFilter", SearchFilter)).ToList();
+                        //return resList[0];
 
-                            }
+                    }
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
@@ -1454,9 +1449,8 @@ namespace RIS_blazor.Server.Repositories
 
         internal async Task<IList<VMUserDetail>> GetUserDetails()
         {
-
-                IList<VMUserDetail> val = await _context.VMUserDetails.FromSqlRaw<VMUserDetail>(@"Select u.UserId,u.LoginName,u.CloudUserName,u.FullName,u.CloudAccessLink,u.cloudPassword,u.MobileNo,u.RoleId,r.Name as RoleName,u.RCId,u.TenantId,u.Status,u.Comments,u.IsAssignToRadAllow,u.IsMainViewerAlloted,u.IsReportWriteAllow,u.IsReportViewAllow from Users u Join Roles r on u.RoleId = r.RoleId").ToListAsync();
-                return val;
+            IList<VMUserDetail> val = await _context.VMUserDetails.FromSqlRaw<VMUserDetail>(@"Select u.UserId,u.LoginName,u.CloudUserName,u.FullName,u.CloudAccessLink,u.cloudPassword,u.MobileNo,u.RoleId,r.Name as RoleName,u.RCId,u.TenantId,u.Status,u.Comments,u.IsAssignToRadAllow,u.IsMainViewerAlloted,u.IsReportWriteAllow,u.IsReportViewAllow from Users u Join Roles r on u.RoleId = r.RoleId").ToListAsync();
+            return val;
         }
 
         internal bool MapUserWithRole(UserRole urole)
@@ -1480,14 +1474,6 @@ namespace RIS_blazor.Server.Repositories
                 return true;
             }
         }
-
-        //internal List<Role> GetRoles()
-        //{
-        //    using (CoreDbContext context = new CoreDbContext())
-        //    {
-        //        return context.Roles.ToList(); ;
-        //    }
-        //}
 
         internal List<VMRemoteDicomNode> GetAllRemoteDicomNodes()
         {
@@ -1520,6 +1506,7 @@ namespace RIS_blazor.Server.Repositories
                 return context.RemoteDicomNodes.Where(x => x.NodeAet.ToUpper().Equals(aet)).FirstOrDefault();
             }
         }
+
         public LoginUser GetUserByName(string userName)
         {
             using (var conn = _context.Database.GetDbConnection())
@@ -1612,11 +1599,11 @@ namespace RIS_blazor.Server.Repositories
             }
         }
 
-        internal List<ProjectMenu> GetAllMenus()
+        internal async Task<List<ProjectMenu>> GetAllMenus()
         {
             using (CoreDbContext context = new CoreDbContext())
             {
-                return context.ProjectMenus.ToList();
+                return await context.ProjectMenus.ToListAsync();
             }
         }
 
@@ -1679,9 +1666,8 @@ namespace RIS_blazor.Server.Repositories
                 }
 
             }
-
-            //});
         }
+
         internal async void SetGroupName()
         {
             using (CoreDbContext context = new CoreDbContext())
@@ -1750,7 +1736,6 @@ namespace RIS_blazor.Server.Repositories
             }
 
         }
-
 
         internal async Task<List<string>> GetUserName()
         {
@@ -1934,8 +1919,6 @@ namespace RIS_blazor.Server.Repositories
                         {
                             JObject o = JObject.Parse(jsonStr);
                             ocsresponse = o.SelectToken("ocs.data").ToObject<List<OcsResponse>>();
-                            //string _shareId = o.SelectToken("ocs.data.id")?.ToObject<string>();
-                            //string _fileName = o.SelectToken("ocs.data.file_target")?.ToObject<string>();
                             Console.WriteLine(ocsresponse);
                             return ocsresponse;
                         }
@@ -2026,13 +2009,13 @@ namespace RIS_blazor.Server.Repositories
             }
         }
 
-        internal async Task<List<MenuItem>> GetMenuItems()
+        internal async Task<List<MainMenuItem>> GetMenuItems()
         {
             using (CoreDbContext context = new CoreDbContext())
             {
                 try
                 {
-                    List<MenuItem> menuItems = await context.MenuItems.ToListAsync();
+                    List<MainMenuItem> menuItems = await context.MenuItems.ToListAsync();
                     var json = JsonConvert.SerializeObject(menuItems);
                     return menuItems;
                 }
@@ -2059,12 +2042,28 @@ namespace RIS_blazor.Server.Repositories
                 }
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.Write(ex.Message);
                 return false;
             }
         }
+
+        internal async Task<String> GetConsultantFromId(int id)
+        {
+
+            return await Task.Run(async () =>
+            {
+
+                using (CoreDbContext context = new CoreDbContext())
+                {
+                    ReportConsultant rad =await context.ReportConsultants.Where(x => x.Rcid == id).FirstOrDefaultAsync();
+                    return rad.Name;
+                }
+
+            });
+        }
+
 
     }
 }

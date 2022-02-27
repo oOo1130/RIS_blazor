@@ -160,9 +160,9 @@ namespace RIS_blazor.Server.Services
             return new RISRepository(_context).UpdateConsultantOpinionOnStudy(opinion);
         }
 
-        internal List<ProjectMenu> GetAllMenus()
+        internal async Task<List<ProjectMenu>> GetAllMenus()
         {
-            return new RISRepository(_context).GetAllMenus();
+            return await new RISRepository(_context).GetAllMenus();
         }
 
         internal void SaveAllowedModalities(List<AllowedModality> rcMList)
@@ -508,7 +508,7 @@ namespace RIS_blazor.Server.Services
             return new RISRepository(_context).AssignedToUser(fileName, userName);
         }
 
-        internal async Task<List<MenuItem>> GetMenuItems()
+        internal async Task<List<MainMenuItem>> GetMenuItems()
         {
             return await new RISRepository(_context).GetMenuItems();
         }
@@ -520,6 +520,10 @@ namespace RIS_blazor.Server.Services
         internal bool DeleteUser(int id)
         {
             return new RISRepository(_context).DeleteUser(id);
+        }
+        internal async Task<String> GetConsultantFromId(int id)
+        {
+            return await new RISRepository(_context).GetConsultantFromId(id);
         }
     }
 }

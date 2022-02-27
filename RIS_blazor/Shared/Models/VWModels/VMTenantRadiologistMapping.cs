@@ -10,9 +10,9 @@ namespace RIS_blazor.Shared.Models.VWModels
     {
         public int Id { get; set; }
         public int TenantId { get; set; }
-        public string TenantName { get; set; }
+        public string? TenantName { get; set; }
         public int RCId { get; set; }
-        public string ConsultantName { get; set; }
-        public string Modality { get; set; }
+        public string? ConsultantName { get; set; }
+        public string? Modality { get; set; }
     }
 }

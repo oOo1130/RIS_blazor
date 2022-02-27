@@ -9,6 +9,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.2" PrivateAssets="all" />
+    <PackageReference Include="Syncfusion.Blazor" Version="19.4.0.53" />
+    <PackageReference Include="WebUI" Version="1.0.6.1" />
   </ItemGroup>
 
   <ItemGroup>

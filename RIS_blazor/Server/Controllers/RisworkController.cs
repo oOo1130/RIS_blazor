@@ -509,7 +509,7 @@ namespace RIS_blazor.Server.Controllers
         }
 
         [HttpGet("GetMenuItems")]
-        public async Task<List<MenuItem>> GetMenuItems()
+        public async Task<List<MainMenuItem>> GetMenuItems()
         {
             return await (new RISService(_context).GetMenuItems());
         }
@@ -538,5 +538,22 @@ namespace RIS_blazor.Server.Controllers
             return new RISService(_context).DeleteUser(id);
         }
 
+        [HttpGet("GetProjectMenus")]
+        public async Task<List<ProjectMenu>>GetAllMenus()
+        {
+            return await new RISService(_context).GetAllMenus();
+        }
+
+        [HttpGet("GetConsultantFromId")]
+        public async Task<string> GetConsultantFromId(int id)
+        {
+            return await (new RISService(_context)).GetConsultantFromId(id);
+        }
+
+        [HttpGet("SaveTenant")]
+        public bool SaveTenant(Tenant _tenant)
+        {
+            return (new RISService(_context)).SaveTenant(_tenant);
+        }
     }
 }

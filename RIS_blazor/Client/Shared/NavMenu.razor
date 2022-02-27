@@ -20,7 +20,7 @@
         }
         else
         {
-            @foreach(MenuItem item in menuItems)
+            @foreach(MainMenuItem item in menuItems)
             {
                 <div class="nav-item py-0">
                     <NavLink class="nav-link" href=@item.menuTo>
@@ -31,7 +31,7 @@
         }
         <div class="nav-item py-0">
             <NavLink class="nav-link" @onclick="()=>expandSubNav = !expandSubNav">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Setting
+                <span class="oi oi-list-plus" aria-hidden="true"></span> Setting
             </NavLink>
             @if (expandSubNav)
             {
@@ -54,10 +54,9 @@
 
 @code {
 
-
     private bool collapseNavMenu = true;
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-    protected List<MenuItem>? menuItems = new();
+    protected List<MainMenuItem>? menuItems = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -74,6 +73,6 @@
 
     private async Task GetMenuItems()
     {
-        menuItems = await Http.GetFromJsonAsync<List<MenuItem>>("Riswork/GetMenuItems");
+        menuItems = await Http.GetFromJsonAsync<List<MainMenuItem>>("Riswork/GetMenuItems");
     }
 }

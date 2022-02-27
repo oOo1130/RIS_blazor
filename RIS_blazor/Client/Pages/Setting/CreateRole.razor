@@ -3,14 +3,33 @@
 @using RIS_blazor.Shared.Models.VWModels
 @using RIS_blazor.Shared.Models.ApiModel
 @using RIS_blazor.Shared.Repositories
+@using Syncfusion.Blazor.Navigations
+@inject NavigationManager NavigationManager;
 @inject HttpClient Http
 
 <h3>Create Role</h3>
+<br />
 <div class="row">
-    <div class="col-lg-4 mx-3">
-
-    </div>
-    <div class="col-lg-8 mx-3">
+    <div class="col-lg-4 px-3">
+        <div class="col-md-6 align-content-center">
+            @foreach (var menu in menus)
+            {
+                <InputCheckbox id="@menu.Description" @bind-Value="@permissions[menu.MenuId-1]"></InputCheckbox>
+                <label for="@menu.Description" class=" fs-5">@menu.Name</label>    
+            }
+        </div>
+    </div>  
+    <div class="col-lg-8 px-3">
+        <EditForm Model="@_role" OnValidSubmit="SaveRole">
+            <div class="row px-5">
+                <label for="RoleName" class="col-lg-5">Role Name</label>
+                <InputText id="RoleName" class="form-control col-lg-7" @bind-Value="_role.Name"></InputText>
+            </div>
+            <br />
+            <div class="form-group d-flex justify-content-center">
+                <button type="submit" class="btn btn-group-sm btn-primary">Save</button>
+            </div>
+        </EditForm> 
         <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3 table-striped">
             <thead>
             <tr class="fw-bolder text-muted">
@@ -29,16 +48,16 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var role in roles)
+            @foreach (var role in initeRoles)
             {
                 <tr key={@role.RoleId}>
                     <td>
                         <div class="form-check form-check-sm form-check-custom form-check-solid">
-                            <input id="selectedUSer"  class="form-check-input widget-13-check" type="checkbox" @onchange="@(() => {selectedUserId = user.UserId;})" />
+                            <input id="selectedUSer"  class="form-check-input widget-13-check" type="checkbox" />
                         </div>
                     </td>
                     <td class="text-center">
-                        <p  class="text-dark fw-bolder text-hover-primary fs-6">
+                        <p class="text-dark fw-bolder text-hover-primary fs-6">
                             @role.RoleId
                         </p>
                     </td>
@@ -55,10 +74,34 @@
 </div>
 
 @code {
+    private List<Role>? initeRoles = new();
+    private Role? _role = new();
+    private List<ProjectMenu>? menus = new();
+    private List<bool> permissions = new();
+    private List<int> menuIds = new();
+    private int index = 0;
 
-    private List<Role>? roles = new();
-    private async Task GetRole()
+    protected override async Task OnInitializedAsync()
     {
-        roles = await Http.GetFromJsonAsync<List<Role>>("Riswork/GetRoles");
+        initeRoles = await Http.GetFromJsonAsync<List<Role>>("Riswork/GetRoles");
+        menus = await Http.GetFromJsonAsync<List<ProjectMenu>>("Riswork/GetProjectMenus");
+
+        SaveRole();
+    }
+
+    private async Task SaveRole()
+    {
+        await Http.GetFromJsonAsync<Role>("Riswork/SaveRole");
+
+        foreach(var permission in permissions){
+            index++;
+            if (permission)
+            {
+                menuIds.Add(index);
+            }
+        }
+
+        NavigationManager.NavigateTo("role", true);
+
     }
 }

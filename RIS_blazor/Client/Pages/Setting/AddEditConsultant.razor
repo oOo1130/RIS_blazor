@@ -1,0 +1,264 @@
+﻿@page "/consultant"
+@using RIS_blazor.Shared.Models
+@using RIS_blazor.Shared.Models.VWModels
+@using RIS_blazor.Shared.Models.ApiModel
+@using RIS_blazor.Shared.Repositories
+using Microsoft.AspNetCore.Mvc
+@inject NavigationManager NavigationManager;
+@inject HttpClient Http
+
+<h3>Component</h3>
+<div  class="row">
+    <div class="col-lg-6">
+        <EditForm Model="@_radiologist" OnValidSubmit="SaveConsultant">
+            <DataAnnotationsValidator />
+            <div class="row my-3">
+                <div class=" col-md-7 row">
+                    <label class="form-label col-md-5 fs-5">Consultant Name</label>
+                    <div class="col-md-7 px-3">
+                        <InputText class="form-control" @bind-Value="_radiologist.Name" />
+                    </div>
+                    <ValidationMessage For="@(() => _radiologist.Name)" />
+                </div>
+                <div class=" col-md-5 row">
+                    <label class="form-label col-md-5 fs-5">Font Size</label>
+                    <div class="col-md-7">
+                        <InputNumber class="form-control" @bind-Value="_radiologist.Fsize1" />
+                    </div>
+                    <ValidationMessage For="@(() => _radiologist.Fsize1)" />
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class=" col-md-7 row">
+                    <label class="form-label col-md-5 fs-5">Identify-1</label>
+                    <div class="col-md-7 px-3">
+                        <InputText class="form-control" @bind-Value="_radiologist.IdentityLine1" />
+                    </div>
+                    <ValidationMessage For="@(() => _radiologist.Name)" />
+                </div>
+                <div class=" col-md-5 row">
+                    <label for="FullName" class="form-label col-md-5 fs-5">Font Size</label>
+                    <div class="col-md-7">
+                        <InputNumber class="form-control" @bind-Value="_radiologist.Fsize2" />
+                    </div>
+                    <ValidationMessage For="@(() => _radiologist.Fsize2)" />
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class=" col-md-7 row">
+                    <label class="form-label col-md-5 fs-5">Identify-2</label>
+                    <div class="col-md-7 px-3">
+                        <InputText class="form-control" @bind-Value="_radiologist.IdentityLine2" />
+                    </div>
+                    <ValidationMessage For="@(() => _radiologist.IdentityLine2)" />
+                </div>
+                <div class=" col-md-5 row">
+                    <label for="FullName" class="form-label col-md-5 fs-5">Font Size</label>
+                    <div class="col-md-7">
+                        <InputNumber class="form-control" @bind-Value="_radiologist.Fsize3" />
+                    </div>
+                    <ValidationMessage For="@(() => _radiologist.Fsize3)" />
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class=" col-md-7 row">
+                    <label class="form-label col-md-5 fs-5">Identify-3</label>
+                    <div class="col-md-7 px-3">
+                        <InputText class="form-control" @bind-Value="_radiologist.IdentityLine3" />
+                    </div>
+                    <ValidationMessage For="@(() => _radiologist.IdentityLine3)" />
+                </div>
+                <div class=" col-md-5 row">
+                    <label for="FullName" class="form-label col-md-5 fs-5">Font Size</label>
+                    <div class="col-md-7">
+                        <InputNumber class="form-control" @bind-Value="_radiologist.Fsize4" />
+                    </div>
+                    <ValidationMessage For="@(() => _radiologist.Fsize4)" />
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class=" col-md-7 row">
+                    <label class="form-label col-md-5 fs-5">Identify-4</label>
+                    <div class="col-md-7 px-3">
+                        <InputText class="form-control" @bind-Value="_radiologist.IdentityLine4" />
+                    </div>
+                    <ValidationMessage For="@(() => _radiologist.IdentityLine4)" />
+                </div>
+                <div class=" col-md-5 row">
+                    <label for="FullName" class="form-label col-md-5 fs-5">Font Size</label>
+                    <div class="col-md-7">
+                        <InputNumber class="form-control" @bind-Value="_radiologist.Fsize5" />
+                    </div>
+                    <ValidationMessage For="@(() => _radiologist.Fsize5)" />
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class=" col-md-7 row">
+                    <label class="form-label col-md-5 fs-5">Identify-5</label>
+                    <div class="col-md-7 px-3">
+                        <InputText class="form-control" @bind-Value="_radiologist.IdentityLine5" />
+                    </div>
+                    <ValidationMessage For="@(() => _radiologist.IdentityLine5)" />
+                </div>
+                <div class=" col-md-5 row">
+                    <label for="FullName" class="form-label col-md-5 fs-5">Font Size</label>
+                    <div class="col-md-7">
+                        <InputNumber class="form-control" @bind-Value="_radiologist.Fsize6" />
+                    </div>
+                    <ValidationMessage For="@(() => _radiologist.Fsize6)" />
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class=" col-md-7 row">
+                    <label class="form-label col-md-5 fs-5">Identify-6</label>
+                    <div class="col-md-7 px-3">
+                        <InputText class="form-control" @bind-Value="_radiologist.IdentityLine6" />
+                    </div>
+                    <ValidationMessage For="@(() => _radiologist.IdentityLine6)" />
+                </div>
+                <div class=" col-md-5 row">
+                    <label for="FullName" class="form-label col-md-5 fs-5">Font Size</label>
+                    <div class="col-md-7">
+                        <InputNumber class="form-control" @bind-Value="_radiologist.Fsize7" />
+                    </div>
+                    <ValidationMessage For="@(() => _radiologist.Fsize7)" />
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div>
+                        <label>Allowed Modalities:</label>
+                        @foreach(var modality in modalities)
+                        {
+                            <InputCheckbox id="modality" @onclick="() => _allowedModalities.Add(modality)"></InputCheckbox>
+                            <label for="modality" class=" fs-5">@modality</label>
+                        }
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div>
+                        <image id="picturebox" @ref=signature></image>
+                        <button @onclick="btnUploadSignature_Clicked" class="btn btn-group-sm btn-primary">Upload Signature</button>
+                        <button @onclick="btnClearSignature_Clicked" class="btn btn-group-sm btn-primary">Clear Signature</button>
+                    </div>
+                    <div>
+                        <label for="FullName" class="form-label fs-5">Will Viewer Open with Default Template?</label>
+                        <InputRadio id="isDefault" class="form-control" @bind-Value="_radiologist.IsViewerWithDefaultTemplate" @onclick="() => _radiologist.IsViewerWithDefaultTemplate = true">Yes</InputRadio>
+                        <InputRadio id="isNotDefault" class="form-control" @bind-Value="_radiologist.IsViewerWithDefaultTemplate" @onclick="() => _radiologist.IsViewerWithDefaultTemplate = false">No</InputRadio>
+                    </div>
+
+                </div>
+            </div>
+
+            <div>
+                <div class="row">
+                    <label class="form-label col-md-5 fs-5">Dicom Path</label>
+                    <div class="col-md-7 px-3">
+                        <InputText class="form-control" @bind-Value="_radiologist.DicomImagePath" />
+                    </div>
+                    <ValidationMessage For="@(() => _radiologist.DicomImagePath)" />
+                </div>
+                <div class="row">
+                    <label class="form-label col-md-5 fs-5">Cloud Id</label>
+                    <div class="col-md-7">
+                        <InputNumber class="form-control" @bind-Value="_radiologist.RadNextCloudID" />
+                    </div>
+                    <ValidationMessage For="@(() => _radiologist.Fsize1)" />
+                </div>
+            </div>
+
+            <br />
+
+            <div class="form-group d-flex justify-content-center">
+                <button type="submit" class="btn btn-group-sm btn-primary">Save</button>
+                <button type="button" class="btn btn-group-sm btn-warning" @onclick="closeConsultant">Cancel</button>
+            </div>
+        </EditForm>
+    </div>
+    <div class="col-lg-6">
+        <table class="table overflow-scroll table-row-bordered table-row-gray-100 align-middle gs-0 gy-3 table-striped">
+          <thead>
+            <tr class="fw-bolder text-muted">
+                <th class="w-5px">
+                    <div class="form-check form-check-sm form-check-custom form-check-solid">
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=" "
+                            hidden
+                        />
+                    </div>
+                </th>
+                <th class="min-w-120px text-center">SrlNo</th>
+                <th class="min-w-140px text-center">Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach (var radiologist in radiologists)
+            {
+                <tr key={@radiologist.RCId}>
+                    <td>
+                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                            <input id="selectedUSer"  class="form-check-input widget-13-check" type="checkbox" @onchange="@(() => {selectedConsultantId = radiologist.RCId;})" />
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <p class="text-dark fw-bolder text-hover-primary fs-6">
+                            @radiologist.RCId
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                            @radiologist.Name
+                        </p>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@code {
+    private List<VMReportConsultant> radiologists = new();
+    private ReportConsultant _radiologist = new();
+    private int selectedConsultantId = new();
+    private List<AllowedModality> allowedModality = new();
+    private string[] modalities = {"DX", "DR", "CR", "CT", "MRI", "US", "ECG"};
+    private List<string> _allowedModalities = new();
+    ElementReference signature;
+
+    protected override async Task OnInitializedAsync()
+    {
+        radiologists = await Http.GetFromJsonAsync<List<VMReportConsultant>>("Riswork/GetAllRadiologists");
+    }
+
+    protected async Task SaveConsultant()
+    {
+        await Http.PostAsJsonAsync<ReportConsultant>("Riswork/AddEditRadiologist", _radiologist);
+        //foreach(var _allowedModality in _allowedModalities)
+        //{
+        //    AllowedModality allowedModality = new();
+        //    allowedModality.Rcid = _radiologist.RCId;
+        // }
+
+    }
+
+    protected async Task closeConsultant()
+    {
+        NavigationManager.NavigateTo("/", true);
+    }
+
+    protected async Task btnUploadSignature_Clicked()
+    {
+
+    }
+
+    protected async Task btnClearSignature_Clicked()
+    {
+       //signature.Context = null;
+    }
+}

@@ -28,6 +28,6 @@ namespace RIS_blazor.Shared.Models
         [StringLength(50)]
         public string ContactPerson { get; set; }
         public bool? IsActive { get; set; }
-        public bool? HasDefaultRadiologist { get; set; }
+        public bool HasDefaultRadiologist { get; set; }
     }
 }
