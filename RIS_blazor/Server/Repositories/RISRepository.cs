@@ -968,11 +968,11 @@ namespace RIS_blazor.Server.Repositories
             }
         }
 
-        internal List<Modality> GetAllowedModalities()
+        internal async Task<List<Modality>> GetAllowedModalities()
         {
             using (CoreDbContext context = new CoreDbContext())
             {
-                return context.Modalities.ToList();
+                return await context.Modalities.ToListAsync();
             }
         }
 
@@ -1716,7 +1716,6 @@ namespace RIS_blazor.Server.Repositories
                                     JObject o = JObject.Parse(jsonStr);
                                     string _group = (string)o.SelectToken("ocs.data.groups[0]");
                                     ReportConsultant _report = context.ReportConsultants.Where(x => x.RadNextCloudID == cloudId).FirstOrDefault();
-                                    _report.GroupName = _group;
                                     context.SaveChanges();
 
                                 }

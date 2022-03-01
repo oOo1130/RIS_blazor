@@ -47,7 +47,6 @@ namespace RIS_blazor.Shared.Models
         public string RadNextCloudID { get; set; }
         [StringLength(50)]
         public string DicomImagePath { get; set; }
-        public string GroupName { get; set; }
 
     }
 }

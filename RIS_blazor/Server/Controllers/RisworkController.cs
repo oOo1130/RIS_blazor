@@ -555,5 +555,11 @@ namespace RIS_blazor.Server.Controllers
         {
             return (new RISService(_context)).SaveTenant(_tenant);
         }
+
+        [HttpGet("GetAllowedModalities")]
+        public async Task<List<Modality>> GetAllowedModalities()
+        {
+            return await (new RISService(_context)).GetAllowedModalities();
+        }
     }
 }

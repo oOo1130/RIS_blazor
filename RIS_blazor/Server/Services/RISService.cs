@@ -55,9 +55,9 @@ namespace RIS_blazor.Server.Services
             return new RISRepository(_context).GetAllUnAssignedWorkDataSet();
         }
 
-        internal List<Modality> GetAllowedModalities()
+        internal async Task<List<Modality>> GetAllowedModalities()
         {
-            return new RISRepository(_context).GetAllowedModalities();
+            return await new RISRepository(_context).GetAllowedModalities();
         }
 
         internal bool SaveHISProcedure(Hisprocedure hisProc)

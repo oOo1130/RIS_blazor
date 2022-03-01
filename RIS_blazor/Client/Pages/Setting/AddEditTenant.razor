@@ -12,170 +12,171 @@
 <div class="row">
     <div class="col-md-6">
         <EditForm Model="@_tenant" OnValidSubmit="SaveTenant">
-            <div class="row px-5">
+            <div class="row my-3">
                 <label for="FullName" class="col-lg-4">Tenant(Full Name)</label>
                 <div class="col-md-8">
                     <InputText id="FullName" class="form-control col-md-7" @bind-Value="_tenant.Name"></InputText>
                 </div>
             </div>
-            <div class="row px-5">
+            <div class="row my-3">
                 <label for="Name" class="col-md-4">Tenant(Short Name)</label>
                 <div class="col-md-8">
                     <InputText id="Name" class="form-control col-md-7" @bind-Value="_tenant.ShortName"></InputText>
                 </div>
             </div>
-            <div class="row px-5">
+            <div class="row my-3">
                 <label for="Address" class="col-md-4">Address</label>
                 <div class="col-md-8">
                     <InputText id="Address" class="form-control col-md-7" @bind-Value="_tenant.Address"></InputText>
                 </div>
             </div>
-            <div class="row px-5">
+            <div class="row my-3">
                 <label for="Mobile" class="col-lg-4">Mobile No</label>
                 <div class="col-md-8">
                     <InputText id="Mobile" class="form-control col-md-7" @bind-Value="_tenant.MobileNo"></InputText>
                 </div>
             </div>
-            <div class="row px-5">
+            <div class="row my-3">
                 <label for="Phone" class="col-lg-4">Phone No</label>
                 <div class="col-md-8">
                     <InputText id="PhoneNo" class="form-control col-md-7" @bind-Value="_tenant.PhoneNo"></InputText>
                 </div>
             </div>
-            <div class="row px-5">
+            <div class="row my-3">
                 <label for="Fax" class="col-lg-4">Fax</label>
                 <div class="col-md-8">
                     <InputText id="Fax" class="form-control col-md-7" @bind-Value="_tenant.Fax"></InputText>
                 </div>
-                <InputText id="Fax" class="form-control col-lg-7" @bind-Value="_tenant.Fax"></InputText>
             </div>
-            <div class="row px-5">
+            <div class="row my-3">
                 <label for="Email" class="col-lg-4">E-mail</label>
                 <div class="col-md-8">
                     <InputText id="Email" class="form-control col-md-7" @bind-Value="_tenant.Email"></InputText>
                 </div>
             </div>
-            <div class="row px-5">
+            <div class="row my-3">
                 <label for="ContactPerson" class="col-lg-4">Contact Person</label>
                 <div class="col-md-8">
                     <InputText id="ContactPerson" class="form-control col-md-7" @bind-Value="_tenant.ContactPerson"></InputText>
                 </div>
             </div>
-            <div class="row px-5">
-                <label for="RoleName" class="col-md-4">Has Default Radiologist?</label>
-                <InputRadio id="isDefault" class="form-control col-lg-3" @bind-Value="_tenant.HasDefaultRadiologist" @onclick="() => _tenant.HasDefaultRadiologist = true"></InputRadio>
-
-@*                <div class="col-md-4">
-                    <InputRadio id="isDefault" class="form-control col-lg-3" @bind-Value="_tenant.HasDefaultRadiologist" @onclick="() => _tenant.HasDefaultRadiologist = true"></InputRadio>
-                    <label for="isDefault">Yes</label>
+            <div class="row my-3">
+                <label for="RoleName" class="col-md-6">Has Default Radiologist?</label>
+                <div class=col-md-6>
+                    <InputRadioGroup Name="hasDefault" @bind-Value="_tenant.HasDefaultRadiologist">
+	                    <InputRadio Name="hasDefault" Value="true" class="mx-2" /> Yes
+	                    <InputRadio Name="hasDefault" Value="false" /> No 
+                    </InputRadioGroup>
                 </div>
-                <div class="col-md-4">
-                    <InputRadio id="isNotDefault" class="form-control col-lg-3" @bind-Value="_tenant.HasDefaultRadiologist" @onclick="() => _tenant.HasDefaultRadiologist = false"></InputRadio>
-                    <label for="isNotDefault">No</label>
-                </div>*@
             </div>
 
             <br />
 
-            <div class="form-group d-flex justify-content-center">
+            <div class="form-group d-flex justify-content-center my-3">
                 <button type="submit" class="btn btn-group-sm btn-primary">Save</button>
             </div>
         </EditForm>
 
         <hr />
 
-        <EditForm Model="@list" class="row" OnValidSubmit="AddToList">
-            <div class="col-md-4">
-                <label for="radiologist" class="form-label fs-5">Select Radiologist</label>
-                     @if (_tenant.HasDefaultRadiologist) {
-                        disable = true; }
-                     else {
-                        disable = false;
-                    }
-                <select id="radiologist" @bind="@list.RCId" disabled="@disable">
-                        <option value="">Select Radiologist</option>
-                        @if (radiologists != null)
-                        {
-                        
-                        @foreach (var radiologist in radiologists)
-                            {
-                                <option value=@radiologist.RCId>@radiologist.Name</option>
-                            }
+        <EditForm Model="@list" class="row d-flex justify-content-center" OnValidSubmit="AddToList">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-5">
+                    <label for="radiologist" class="form-label fs-5">Select Radiologist</label>
+                         @if (_tenant.HasDefaultRadiologist) {
+                            disable = true; }
+                         else {
+                            disable = false;
                         }
-                </select>
+                    <select id="radiologist" @bind="@list.RCId" disabled="@disable">
+                            <option value="">Select Radiologist</option>
+                            @if (radiologists != null)
+                            {
+                        
+                            @foreach (var radiologist in radiologists)
+                                {
+                                    <option value=@radiologist.RCId>@radiologist.Name</option>
+                                }
+                            }
+                    </select>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-5">
+                    <label for="modality" class="form-label fs-5">Select Modality</label>
+                    <select id="modality" @bind="list.Modality">
+                        <option value="">Select Modality</option>
+                        <option value="DX">DX</option>
+                        <option value="CT">CT</option>
+                        <option value="MR">MR</option>
+                        <option value="CR">CR</option>
+                        <option value="DR">DR</option>
+                        <option value="MG">MG</option>
+                        <option value="US">US</option>
+                        <option value="ECG">ECG</option>
+                    </select>
+                </div>
             </div>
-            <div class="col-md-4">
-                <label for="modality" class="form-label fs-5">Select Modality</label>
-                <select id="modality" @bind="list.Modality">
-                    <option value="">Select Modality</option>
-                    <option value="DX">DX</option>
-                    <option value="CT">CT</option>
-                    <option value="MR">MR</option>
-                    <option value="CR">CR</option>
-                    <option value="DR">DR</option>
-                    <option value="MG">MG</option>
-                    <option value="US">US</option>
-                    <option value="ECG">ECG</option>
-                </select>
-            </div>
-            <div class="form-group d-flex justify-content-center col-md-4">
-                <button type="submit" class="btn btn-group-sm btn-primary">Add to List</button>
+            
+            <div class="form-group d-flex justify-content-center">
+                <button type="submit" class="btn btn-group-sm btn-primary m-4">Add to List</button>
             </div>
         </EditForm>
 
-        <br />
+        <hr />
 
-        <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3 table-striped">
-            <thead>
-                <tr class="fw-bolder text-muted">
-                    <th class="w-5px">
-                        <div class="form-check form-check-sm form-check-custom form-check-solid">
-                            <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=" "
-                            hidden
-                            />
-                        </div>
-                    </th>
-                    <th class="min-w-120px text-center">SrlNo</th>
-                    <th class="min-w-120px text-center">Radiologist</th>
-                    <th class="min-w-120px text-center">Modality</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach (var list in lists)
-            {
-                <tr key={@list.Id}>
-                    <td>
-                        <div class="form-check form-check-sm form-check-custom form-check-solid">
-                            <input id="selectedUSer"  class="form-check-input widget-13-check" type="checkbox" />
-                        </div>
-                    </td>
-                    <td class="text-center">
-                        <p  class="text-dark fw-bolder text-hover-primary fs-6">
-                            @list.RCId
-                        </p>
-                    </td>
-                    <td class="text-center">
-                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
-                            @list.ConsultantName
-                        </p>
-                    </td>
-                    <td class="text-center">
-                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
-                            @list.Modality
-                        </p>
-                    </td>
-                </tr>
-            }
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3 table-striped table-bordered" style="height:100px;overflow-y:scroll">
+                <thead>
+                    <tr class="fw-bolder text-muted">
+                        <th class="w-5px">
+                            <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                <input
+                                class="form-check-input"
+                                type="checkbox"
+                                value=" "
+                                hidden
+                                />
+                            </div>
+                        </th>
+                        <th class="min-w-120px text-center">SrlNo</th>
+                        <th class="min-w-120px text-center">Radiologist</th>
+                        <th class="min-w-120px text-center">Modality</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var list in lists)
+                {
+                    <tr key={@list.Id}>
+                        <td>
+                            <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                <input id="selectedUSer"  class="form-check-input widget-13-check" type="checkbox" />
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <p  class="text-dark fw-bolder text-hover-primary fs-6">
+                                @list.RCId
+                            </p>
+                        </td>
+                        <td class="text-center">
+                            <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                                @list.ConsultantName
+                            </p>
+                        </td>
+                        <td class="text-center">
+                            <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                                @list.Modality
+                            </p>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
 
     </div>
 
-    <div class="col-md-6">
-        <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3 table-striped">
+    <div class="col-md-6 table-responsive" style="height:1000px;overflow-y:scroll">
+        <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3 table-striped table-bordered">
             <thead>
             <tr class="fw-bolder text-muted">
                 <th class="w-5px">
@@ -183,7 +184,6 @@
                         <input
                         class="form-check-input"
                         type="checkbox"
-                        value=" "
                         hidden
                         />
                     </div>
@@ -236,7 +236,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        tenants = await Http.GetFromJsonAsync<List<Tenant>>("Riswork/GetRoles");
+        tenants = await Http.GetFromJsonAsync<List<Tenant>>("Riswork/GetAllTenants");
         radiologists = await Http.GetFromJsonAsync<List<VMReportConsultant>>("Riswork/GetAllRadiologists");
 
     }
