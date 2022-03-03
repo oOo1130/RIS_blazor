@@ -4,12 +4,14 @@
 @using RIS_blazor.Shared.Models.VWModels
 @using RIS_blazor.Shared.Models.ApiModel
 @using RIS_blazor.Shared.Repositories
+@using System.Drawing
+@using System.Drawing.Imaging
 @inject NavigationManager NavigationManager;
 @inject HttpClient Http
 
 <h3>Add/Edit Consultant</h3>
-<div  class="row">
-    <div class="col-md-6">
+<div class="row">
+    <div class="col-md-7">
         <EditForm Model="@_radiologist" OnValidSubmit="SaveConsultant">
             <DataAnnotationsValidator />
             <div class="row my-3">
@@ -130,32 +132,42 @@
             <div class="row">
                 <div class="col-lg-6">
                     <label>Allowed Modalities:</label>
-                    <div>
-                        @*@foreach(var modality in modalities)
-                        {
-                            <InputCheckbox id="modality" @onclick="() => _allowedModalities.Add(modality)"></InputCheckbox>
-                            <label for="modality" class=" fs-5">@modality</label>
-                        }*@
-                        <input type="checkbox" value="test" checked="@isAllowed[0]" @onchange="@((args) => { isModal = (bool)args.Value; Console.WriteLine(isAllowed].ToString());} )" />
-                        <label>checkbox</label>
-                    </div>
+                    @foreach(var _selectedModality in lSelectedModality)
+                    {
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-6 justify-content-end">
+                                <InputCheckbox id="modality" @bind-Value="_selectedModality.isSelected" />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="modality" class="">@_selectedModality.modality.Name</label>
+                            </div>
+                        </div>
+                    }
                 </div>
                 <div class="col-lg-6">
                     <div>
                         <image id="picturebox"></image>
-                        <button @onclick="btnUploadSignature_Clicked" class="btn btn-group-sm btn-primary my-2">Upload Signature</button>
-                        <button @onclick="btnClearSignature_Clicked" class="btn btn-group-sm btn-primary my-2">Clear Signature</button>
+                        <div class="d-grid gap-2 d-flex justify-content-center">
+                            <button @onclick="btnUploadSignature_Clicked" class="btn btn-group-sm btn-primary">Upload Signature</button>
+                            <button @onclick="btnClearSignature_Clicked" class="btn btn-group-sm btn-primary">Clear Signature</button>
+                        </div>
                     </div>
                     <div>
-                        <label for="FullName" class="form-label">Will Viewer Open with Default Template?</label>
-                        <InputRadio id="isDefault" class="form-control" @bind-Value="_radiologist.IsViewerWithDefaultTemplate" @onclick="() => _radiologist.IsViewerWithDefaultTemplate = true">Yes</InputRadio>
-                        <InputRadio id="isNotDefault" class="form-control" @bind-Value="_radiologist.IsViewerWithDefaultTemplate" @onclick="() => _radiologist.IsViewerWithDefaultTemplate = false">No</InputRadio>
+                        <div>
+                            <label for="FullName" class="form-label">Will Viewer Open with Default Template?</label>
+                        </div>
+                        <div>
+                            <InputRadioGroup Name="hasDefault" class="d-grid gap-2" @bind-Value="_radiologist.IsViewerWithDefaultTemplate">
+                                <InputRadio Name="hasDefault" Value="true" class="mx-2" />Yes
+                                <InputRadio Name="hasDefault" Value="false" class="mx-2" />No
+                            </InputRadioGroup>
+                        </div>
                     </div>
 
                 </div>
             </div>
 
-            <div>
+            <div class="mt-xxl-5">
                 <div class="row my-3">
                     <label class="form-label col-md-5 fs-5">Dicom Path</label>
                     <div class="col-md-7 px-3">
@@ -165,7 +177,7 @@
                 </div>
                 <div class="row my-3">
                     <label class="form-label col-md-5 fs-5">Cloud Id</label>
-                    <div class="col-md-7">
+                    <div class="col-md-7 px-3">
                         <InputText class="form-control" @bind-Value="_radiologist.RadNextCloudID" />
                     </div>
                     <ValidationMessage For="@(() => _radiologist.RadNextCloudID)" />
@@ -173,15 +185,15 @@
             </div>
 
             <br />
-
-            <div class="form-group d-flex justify-content-center">
-                <button type="submit" class="btn btn-group-sm btn-primary mx-3">Save</button>
-                <button type="button" class="btn btn-group-sm btn-close mx-3" @onclick="closeConsultant">Cancel</button>
+            
+            <div class="form-group d-grid gap-2 d-flex justify-content-center">
+                <button type="submit" class="btn btn-group-sm btn-primary">Save</button>
+                <button type="button" class="btn btn-group-sm btn-danger" @onclick="closeConsultant">Cancel</button>
             </div>
         </EditForm>
     </div>
-    <div class="col-md-6">
-        @*<table class="table overflow-scroll table-row-bordered table-row-gray-100 align-middle gs-0 gy-3 table-striped">
+    <div class="col-md-5" style="height:1000px;overflow-y:scroll">
+        <table class="table overflow-scroll table-row-bordered table-row-gray-100 align-middle gs-0 gy-3 table-striped table-bordered">
           <thead>
             <tr class="fw-bolder text-muted">
                 <th class="w-5px">
@@ -220,41 +232,76 @@
                 </tr>
             }
             </tbody>
-        </table>*@
+        </table>
     </div>
 </div>
 
 @code {
+
     private List<VMReportConsultant>? radiologists = new();
-    private ReportConsultant _radiologist = new();
+    private ReportConsultant? _radiologist = new();
     private int selectedConsultantId = new();
-    private List<AllowedModality>? allowedModality = new();
+    private List<AllowedModality>? allowedModalities = new();
+    private AllowedModality? allowedModality = new();
     private List<Modality>? modalities = new();
-    private List<string> _allowedModalities = new();
-    private List<bool> isAllowed = new();
-    private bool isModal = new();
-    private bool test = new();
+    private Modality? modality = new();
+    private List<int>? noModalities = new();
+    private List<SelectedModality>? lSelectedModality = new();
+    private SelectedModality? _selectedModality = new();
+    private byte[] imgbyte = null;
+
+    private class SelectedModality
+    {
+        public Modality modality { get; set; }
+        public bool isSelected { get; set; }
+    }
 
     protected override async Task OnInitializedAsync()
     {
         radiologists = await Http.GetFromJsonAsync<List<VMReportConsultant>>("Riswork/GetAllRadiologists");
         modalities = await Http.GetFromJsonAsync<List<Modality>>("Riswork/GetAllowedModalities");
+
+        foreach(var modality in modalities)
+        {
+            _selectedModality = new SelectedModality() {modality = modality, isSelected = false };
+            lSelectedModality.Add(_selectedModality);
+        }
     }
 
     protected async Task SaveConsultant()
     {
         await Http.PostAsJsonAsync<ReportConsultant>("Riswork/AddEditRadiologist", _radiologist);
-        //foreach(var _allowedModality in _allowedModalities)
-        //{
-        //    AllowedModality allowedModality = new();
-        //    allowedModality.Rcid = _radiologist.RCId;
-        // }
+        
+        SaveModality();
+
+        NavigationManager.NavigateTo("consultant", true);
+
+    }
+
+    protected async void SaveModality() 
+    {
+        foreach(var _selectedModality in lSelectedModality)
+        {
+            if(_selectedModality.isSelected) 
+            {
+                noModalities.Add(_selectedModality.modality.Id);
+            }
+        }
+
+        foreach(var _noModality in noModalities)
+        {
+            allowedModality.Rcid = _radiologist.Rcid;
+            allowedModality.Modality = modalities[_noModality].Name;
+            allowedModalities.Add(allowedModality);
+        }
+
+        Http.PostAsJsonAsync("Riswork/SaveAllowedModalities", allowedModalities);
 
     }
 
     protected void closeConsultant()
     {
-        NavigationManager.NavigateTo("/", true);
+        NavigationManager.NavigateTo("consultant", true);
     }
 
     protected void btnUploadSignature_Clicked()
@@ -267,8 +314,30 @@
         //signature.Context = null;
     }
 
-    void CheckboxClicked(string clubID, object checkedValue)
+    public Image byteArrayToImage(byte[] bytesArr)
     {
+        using (MemoryStream memstr = new MemoryStream(bytesArr))
+        {
+            Image img = Image.FromStream(memstr);
+            return img;
+        }
     }
 
+    
+    private byte[] GetImagebyte()
+    {
+        try
+        {
+            using (var ms = new MemoryStream())
+            {
+                Bitmap bmp = new Bitmap(sgnbox.Image);
+                bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                return ms.ToArray();
+            }
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+    }
 }

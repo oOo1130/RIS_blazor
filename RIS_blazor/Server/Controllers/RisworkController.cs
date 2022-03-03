@@ -561,5 +561,17 @@ namespace RIS_blazor.Server.Controllers
         {
             return await (new RISService(_context)).GetAllowedModalities();
         }
+
+        [HttpPost("SaveAllowedModalities")]
+        public void SaveAllowedModalities(List<AllowedModality> rcMList)
+        {
+            new RISService(_context).SaveAllowedModalities(rcMList);
+        }
+
+        [HttpPost("GrantMenuPermission")]
+        public void GrantMenuPermission(PermissionRequest _permissionRequest)
+        {
+            new RISService(_context).GrantMenuPermission(_permissionRequest.menuIds, _permissionRequest.RoleId);
+        }
     }
 }

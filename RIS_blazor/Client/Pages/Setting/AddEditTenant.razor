@@ -63,9 +63,9 @@
             <div class="row my-3">
                 <label for="RoleName" class="col-md-6">Has Default Radiologist?</label>
                 <div class=col-md-6>
-                    <InputRadioGroup Name="hasDefault" @bind-Value="_tenant.HasDefaultRadiologist">
+                    <InputRadioGroup Name="hasDefault" class="d-grid gap-2" @bind-Value="_tenant.HasDefaultRadiologist">
 	                    <InputRadio Name="hasDefault" Value="true" class="mx-2" /> Yes
-	                    <InputRadio Name="hasDefault" Value="false" /> No 
+	                    <InputRadio Name="hasDefault" Value="false" class="mx-2" /> No 
                     </InputRadioGroup>
                 </div>
             </div>
@@ -100,7 +100,9 @@
                             }
                     </select>
                 </div>
-                <div class="col-md-2"></div>
+                <div class="col-md-2">
+                    <p>1</p>
+                </div>
                 <div class="col-md-5">
                     <label for="modality" class="form-label fs-5">Select Modality</label>
                     <select id="modality" @bind="list.Modality">
