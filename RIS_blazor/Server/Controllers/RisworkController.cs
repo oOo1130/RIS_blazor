@@ -121,6 +121,12 @@ namespace RIS_blazor.Server.Controllers
             return new RISService(_context).CreateUser(user);
         }
 
+        [HttpPost("CreateRole")]
+        public async Task<int> CreateRole(Role role)
+        {
+            return await new RISService(_context).CreateRole(role);
+        }
+
         [HttpPost("CancelAssignedToRadiologist")]
         public IActionResult CancelAssignedToRadiologist(List<SelectedProcedureForAssign> _selectedWorklists)
         {
@@ -547,10 +553,11 @@ namespace RIS_blazor.Server.Controllers
         [HttpGet("GetConsultantFromId")]
         public async Task<string> GetConsultantFromId(int id)
         {
-            return await (new RISService(_context)).GetConsultantFromId(id);
+            string name = await (new RISService(_context)).GetConsultantFromId(id);
+            return name;
         }
 
-        [HttpGet("SaveTenant")]
+        [HttpPost("SaveTenant")]
         public bool SaveTenant(Tenant _tenant)
         {
             return (new RISService(_context)).SaveTenant(_tenant);

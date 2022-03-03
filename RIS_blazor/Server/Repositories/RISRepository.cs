@@ -1289,7 +1289,7 @@ namespace RIS_blazor.Server.Repositories
             }
         }
 
-        internal bool CreateRole(Role role)
+        internal async Task<int> CreateRole(Role role)
         {
             using (CoreDbContext context = new CoreDbContext())
             {
@@ -1297,13 +1297,13 @@ namespace RIS_blazor.Server.Repositories
                 {
                     context.Roles.Add(role);
                     context.SaveChanges();
-                    return true;
+                    return role.RoleId;
 
                 }
                 catch (Exception ex)
                 {
                     Console.Write(ex.Message);
-                    return false;
+                    return 0;
                 }
             }
         }
@@ -2048,7 +2048,7 @@ namespace RIS_blazor.Server.Repositories
             }
         }
 
-        internal async Task<String> GetConsultantFromId(int id)
+        internal async Task<string> GetConsultantFromId(int id)
         {
 
             return await Task.Run(async () =>

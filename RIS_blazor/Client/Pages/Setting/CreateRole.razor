@@ -93,6 +93,7 @@
     private Menu menu = new();
     private List<int> menuIds = new();
     private PermissionRequest _permissionRequest = new();
+    private int _roleId = new();
 
     public class Menu
     {
@@ -114,8 +115,8 @@
 
     private async Task SaveRole()
     {
-        await Http.GetFromJsonAsync<Role>("Riswork/SaveRole");
-
+        HttpResponseMessage response = await Http.PostAsJsonAsync<Role>("Riswork/CreateRole", _role);
+        _roleId = await response.Content.ReadFromJsonAsync<int>();
         GrantMenuPermission();
 
         NavigationManager.NavigateTo("role", true);
@@ -127,7 +128,7 @@
         foreach(var menu in menus)
         {
             if (menu.isSelectedMenu) menuIds.Add(menu.projectMenu.DisplayOrder);
-            _permissionRequest = new PermissionRequest() { menuIds = menuIds, RoleId = _role.RoleId };
+            _permissionRequest = new PermissionRequest() { menuIds = menuIds, RoleId = _roleId };
         }
 
         Http.PostAsJsonAsync("Riswork/GrantMenuPermission", _permissionRequest);

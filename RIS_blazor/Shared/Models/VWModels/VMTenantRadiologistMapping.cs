@@ -9,7 +9,7 @@ namespace RIS_blazor.Shared.Models.VWModels
     public class VMTenantRadiologistMapping
     {
         public int Id { get; set; }
-        public int TenantId { get; set; }
+        public int? TenantId { get; set; }
         public string? TenantName { get; set; }
         public int RCId { get; set; }
         public string? ConsultantName { get; set; }

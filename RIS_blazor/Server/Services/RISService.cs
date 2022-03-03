@@ -315,9 +315,9 @@ namespace RIS_blazor.Server.Services
             return new RISRepository(_context).UpdateProcedure(upprocObj);
         }
 
-        internal bool CreateRole(Role role)
+        internal async Task<int> CreateRole(Role role)
         {
-            return new RISRepository(_context).CreateRole(role);
+            return await new RISRepository(_context).CreateRole(role);
         }
 
         internal bool UpdateHtmlTempalate(HtmlTempleForReport template)
@@ -521,7 +521,7 @@ namespace RIS_blazor.Server.Services
         {
             return new RISRepository(_context).DeleteUser(id);
         }
-        internal async Task<String> GetConsultantFromId(int id)
+        internal async Task<string> GetConsultantFromId(int id)
         {
             return await new RISRepository(_context).GetConsultantFromId(id);
         }

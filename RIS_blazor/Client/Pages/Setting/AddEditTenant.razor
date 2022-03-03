@@ -84,9 +84,9 @@
                 <div class="col-md-5">
                     <label for="radiologist" class="form-label fs-5">Select Radiologist</label>
                          @if (_tenant.HasDefaultRadiologist) {
-                            disable = true; }
+                            disable = false; }
                          else {
-                            disable = false;
+                            disable = true;
                         }
                     <select id="radiologist" @bind="@list.RCId" disabled="@disable">
                             <option value="">Select Radiologist</option>
@@ -100,9 +100,7 @@
                             }
                     </select>
                 </div>
-                <div class="col-md-2">
-                    <p>1</p>
-                </div>
+                <div class="col-md-2" style="border-left:1px solid #000;height:500px"></div>
                 <div class="col-md-5">
                     <label for="modality" class="form-label fs-5">Select Modality</label>
                     <select id="modality" @bind="list.Modality">
@@ -246,12 +244,15 @@
     protected async Task SaveTenant()
     {
         _tenant.IsActive = true;
-        await Http.GetFromJsonAsync<bool>("Riswork/SaveTenant" + _tenant);
+        Http.PostAsJsonAsync<Tenant>("Riswork/SaveTenant", _tenant);
+        NavigationManager.NavigateTo("tenant", true);
     }
 
     protected async Task AddToList()
     {
-        list.ConsultantName = await Http.GetFromJsonAsync<String>("Riswork/GetConsultantFromId" + list.RCId);
+        string name = await Http.GetFromJsonAsync<string>("Riswork/GetConsultantFromId?id=" + list.RCId);
+        list.ConsultantName = name;
+        list.RCId = 0;
         lists.Add(list);
     }
 }

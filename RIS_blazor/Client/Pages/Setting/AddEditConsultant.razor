@@ -6,6 +6,7 @@
 @using RIS_blazor.Shared.Repositories
 @using System.Drawing
 @using System.Drawing.Imaging
+@using System.IO
 @inject NavigationManager NavigationManager;
 @inject HttpClient Http
 
@@ -147,11 +148,19 @@
                 <div class="col-lg-6">
                     <div>
                         <image id="picturebox"></image>
+                        @*<form @onsubmit="OnSubmit">
+                            <InputFile OnChange="OnInputFileChange" multiple />
+                            <br /><br />
+                            <button type="submit">Upload Selected File(s)</button>
+                        </form>*@
                         <div class="d-grid gap-2 d-flex justify-content-center">
                             <button @onclick="btnUploadSignature_Clicked" class="btn btn-group-sm btn-primary">Upload Signature</button>
                             <button @onclick="btnClearSignature_Clicked" class="btn btn-group-sm btn-primary">Clear Signature</button>
                         </div>
                     </div>
+
+                    <br />
+
                     <div>
                         <div>
                             <label for="FullName" class="form-label">Will Viewer Open with Default Template?</label>
@@ -271,7 +280,7 @@
     protected async Task SaveConsultant()
     {
         await Http.PostAsJsonAsync<ReportConsultant>("Riswork/AddEditRadiologist", _radiologist);
-        
+
         SaveModality();
 
         NavigationManager.NavigateTo("consultant", true);
@@ -301,12 +310,18 @@
 
     protected void closeConsultant()
     {
-        NavigationManager.NavigateTo("consultant", true);
+        _radiologist = new ReportConsultant() { };
     }
 
     protected void btnUploadSignature_Clicked()
     {
-
+        
+        //OpenFileDialog opnfd = new OpenFileDialog();
+        //opnfd.Filter = "Image Files (*.jpg;*.jpeg;.*.png;)|*.jpg;*.jpeg;*.png";
+        //if (opnfd.ShowDialog() == DialogResult.OK)
+        //{
+        //    sgnbox.Image = new Bitmap(opnfd.FileName);
+        //}
     }
 
     protected void btnClearSignature_Clicked()
@@ -314,30 +329,38 @@
         //signature.Context = null;
     }
 
-    public Image byteArrayToImage(byte[] bytesArr)
-    {
-        using (MemoryStream memstr = new MemoryStream(bytesArr))
-        {
-            Image img = Image.FromStream(memstr);
-            return img;
-        }
-    }
+    //public Image byteArrayToImage(byte[] bytesArr)
+    //{
+    //    using (MemoryStream memstr = new MemoryStream(bytesArr))
+    //    {
+    //        Image img = Image.FromStream(memstr);
+    //        return img;
+    //    }
+    //}
 
-    
-    private byte[] GetImagebyte()
-    {
-        try
-        {
-            using (var ms = new MemoryStream())
-            {
-                Bitmap bmp = new Bitmap(sgnbox.Image);
-                bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                return ms.ToArray();
-            }
-        }
-        catch (Exception ex)
-        {
-            return null;
-        }
-    }
+    //public byte[] ImageToByteArray(System.Drawing.Image imageIn)
+    //{
+    //   using (var ms = new MemoryStream())
+    //   {
+    //      imageIn.Save(ms,imageIn.RawFormat);
+    //      return  ms.ToArray();
+    //   }
+    //}
+
+    //private byte[] GetImagebyte()
+    //{
+    //    try
+    //    {
+    //        using (var ms = new MemoryStream())
+    //        {
+    //            Bitmap bmp = new Bitmap(sgnbox.Image);
+    //            bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+    //            return ms.ToArray();
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        return null;
+    //    }
+    //}
 }
