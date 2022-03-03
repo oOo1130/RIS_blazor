@@ -147,12 +147,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div>
-                        <image id="picturebox"></image>
-                        @*<form @onsubmit="OnSubmit">
-                            <InputFile OnChange="OnInputFileChange" multiple />
-                            <br /><br />
-                            <button type="submit">Upload Selected File(s)</button>
-                        </form>*@
+                        @*<img src="data:image/bmp;base64, @(Convert.ToBase64String(admin.GetCategoryLabelImage(label.Id)))"/>*@
                         <div class="d-grid gap-2 d-flex justify-content-center">
                             <button @onclick="btnUploadSignature_Clicked" class="btn btn-group-sm btn-primary">Upload Signature</button>
                             <button @onclick="btnClearSignature_Clicked" class="btn btn-group-sm btn-primary">Clear Signature</button>
@@ -316,12 +311,6 @@
     protected void btnUploadSignature_Clicked()
     {
         
-        //OpenFileDialog opnfd = new OpenFileDialog();
-        //opnfd.Filter = "Image Files (*.jpg;*.jpeg;.*.png;)|*.jpg;*.jpeg;*.png";
-        //if (opnfd.ShowDialog() == DialogResult.OK)
-        //{
-        //    sgnbox.Image = new Bitmap(opnfd.FileName);
-        //}
     }
 
     protected void btnClearSignature_Clicked()
