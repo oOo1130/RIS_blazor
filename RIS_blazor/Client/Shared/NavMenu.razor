@@ -3,18 +3,10 @@
 @using RIS_blazor.Shared.Models.ApiModel
 @inject HttpClient Http
 
-<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">RIS_blazor</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>
+<div class="@NavMenuCssClass"  @onclick="ToggleNavMenu">
+    <ul class="flex-grow-1">
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        @if (menuItems == null)
+            @if (menuItems == null)
         {
             <p><em>Loading...</em></p>
         }
@@ -22,34 +14,32 @@
         {
             @foreach(MainMenuItem item in menuItems)
             {
-                <div class="nav-item py-0">
-                    <NavLink class="nav-link" href=@item.menuTo>
-                        <span class="oi oi-list-rich" aria-hidden="true"></span>@item.menuTitle
-                    </NavLink>
-                </div>
+                <li>
+                    <a href=@item.menuTo>
+                        @item.menuTitle
+                    </a>
+                </li>
             }
         }
-        <div class="nav-item py-0">
-            <NavLink class="nav-link" @onclick="()=>expandSubNav = !expandSubNav">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Setting
-            </NavLink>
-            @if (expandSubNav)
-            {
-                <NavLink class="nav-link" style="margin-top:0; margin-bottom:0;" href="user">
-                    <span class="oi oi-list-man" aria-hidden="true"></span> Create User
-                </NavLink>
-                <NavLink class="nav-link" style="margin-top:0; margin-bottom:0;" href="role">
-                    <span class="oi oi-list-man" aria-hidden="true"></span> Create Role
-                </NavLink>
-                <NavLink class="nav-link" style="margin-top:0; margin-bottom:0;" href="tenant">
-                    <span class="oi oi-list-man" aria-hidden="true"></span> Add/Edit Tenant
-                </NavLink>
-                <NavLink class="nav-link" style="margin-top:0; margin-bottom:0;" href="consultant">
-                    <span class="oi oi-list-man" aria-hidden="true"></span> Add/Edit Consultant
-                </NavLink>
-            }
-        </div>
-    </nav>
+
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">Setting</a>
+            <div class="dropdown-content">
+                <a href="user">
+                    Create User
+                </a>
+                <a href="role">
+                    Create Role
+                </a>
+                <a href="tenant">
+                    Add/Edit Tenant
+                </a>
+                <a href="consultant">
+                    Add/Edit Consultant
+                </a>
+            </div>
+        </li>
+    </ul>
 </div>
 
 @code {

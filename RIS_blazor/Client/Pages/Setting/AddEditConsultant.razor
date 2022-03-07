@@ -147,7 +147,6 @@
                 </div>
                 <div class="col-lg-6">
                     <div>
-                        @*<img src="data:image/bmp;base64, @(Convert.ToBase64String(admin.GetCategoryLabelImage(label.Id)))"/>*@
                         <div class="d-grid gap-2 d-flex justify-content-center">
                             <button @onclick="btnUploadSignature_Clicked" class="btn btn-group-sm btn-primary">Upload Signature</button>
                             <button @onclick="btnClearSignature_Clicked" class="btn btn-group-sm btn-primary">Clear Signature</button>
@@ -196,7 +195,7 @@
             </div>
         </EditForm>
     </div>
-    <div class="col-md-5" style="height:1000px;overflow-y:scroll">
+    <div class="col-md-5 card" style="height:100vh;overflow-y:scroll">
         <table class="table overflow-scroll table-row-bordered table-row-gray-100 align-middle gs-0 gy-3 table-striped table-bordered">
           <thead>
             <tr class="fw-bolder text-muted">
@@ -252,11 +251,13 @@
     private List<int>? noModalities = new();
     private List<SelectedModality>? lSelectedModality = new();
     private SelectedModality? _selectedModality = new();
-    private byte[] imgbyte = null;
+    private byte[] imgbyte;
+    private string imgsrc = string.Empty;
+    IFileListEntry file = null;
 
     private class SelectedModality
     {
-        public Modality modality { get; set; }
+        public Modality? modality { get; set; }
         public bool isSelected { get; set; }
     }
 

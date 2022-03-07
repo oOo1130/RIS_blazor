@@ -14,7 +14,7 @@
 }
 else
 {<div class="row">
-    <div>
+    <div class="col-md-6">
         <EditForm Model="@user" OnValidSubmit="SaveUser">
             <DataAnnotationsValidator />
             <div class="row my-3">
@@ -74,13 +74,13 @@ else
             </div>
             <div class="row my-3">
                 <div class=" col-md-6 row">
-                    <label for="Consultant" class="form-label col-md-5 fs-5">Select Consultant</label>
+                    <label for="Consultant" class="form-label col-md-6 fs-6">Select Consultant</label>
                     @if (user.RoleId == 3) {
                         unlocker = false; }
                      else {
                         unlocker = true;
                     }
-                    <select id="Consultant" class="col-md-7" disabled="@unlocker" @bind="user.Rcid">
+                    <select id="Consultant" class="col-md-6" disabled="@unlocker" @bind="user.Rcid">
                           <option value="">select consultant</option>
                           @foreach (var consultant in consultants)
                          {
@@ -90,8 +90,8 @@ else
                     <ValidationMessage For="@(() => user.Rcid)" />
                 </div>
                 <div class="col-md-6 row">
-                    <label for="Hospital" class="form-label col-md-5 fs-5">Select Hospital</label>
-                    <select id="Hospital" class="col-md-7" @bind="user.TenantId">
+                    <label for="Hospital" class="form-label col-md-6 fs-6">Select Hospital</label>
+                    <select id="Hospital" class="col-md-6" @bind="user.TenantId">
                           <option value="">Select Hospital</option>
                           @foreach (var hospital in hospitals)
                          {
@@ -164,12 +164,13 @@ else
                 <button type="button" class="btn btn-group-sm btn-primary" @onclick="deleteUser">Delete</button>
                 <button type="button" class="btn btn-group-sm btn-primary" @onclick="cancelSelectedUser">Cancel</button>
             </div>
+            <br />
         </EditForm>
     </div>
 
     <br />
 
-    <div class="table-responsive" style="height:1000px;overflow-y:scroll">
+    <div class="card table-responsive col-md-6" style="height:100vh; overflow-y:scroll">
         <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3 table-striped table-bordered">
           <thead>
             <tr class="fw-bolder text-muted">
@@ -189,7 +190,7 @@ else
                 <th class="min-w-120px text-center">Status</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="card-body">
             @foreach (var user in users)
             {
                 <tr key={@user.UserId}>
