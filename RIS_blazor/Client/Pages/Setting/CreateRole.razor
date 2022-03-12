@@ -17,11 +17,11 @@
                 @foreach(var menu in menus)
                 {
                     <div class="row d-flex justify-content-center">
-                        <div class="col-md-4 justify-content-end">
+                        <div class="col-md-4 d-flex justify-content-end">
                             <InputCheckbox id="menu" @bind-Value="menu.isSelectedMenu"></InputCheckbox>
                         </div>
                         <div class="col-md-8">
-                            <label for="menu">@menu.projectMenu.Name</label>
+                            <label for="menu" class="">@menu.projectMenu.Name</label>
                         </div>
                     </div>
                 }

@@ -2,11 +2,14 @@
 @using System
 @using RIS_blazor.Shared.Models
 @using RIS_blazor.Shared.Models.VWModels
-@using RIS_blazor.Shared.Models.ApiModel
-@using RIS_blazor.Shared.Repositories
 @using System.Drawing
 @using System.Drawing.Imaging
 @using System.IO
+@using System.Collections.Generic
+@using System.Threading.Tasks
+@using System.Windows
+@using Microsoft.AspNetCore.Components.Forms
+
 @inject NavigationManager NavigationManager;
 @inject HttpClient Http
 
@@ -136,17 +139,24 @@
                     @foreach(var _selectedModality in lSelectedModality)
                     {
                         <div class="row d-flex justify-content-center">
-                            <div class="col-md-6 justify-content-end">
+                            <div class="col-md-6 d-flex justify-content-end">
                                 <InputCheckbox id="modality" @bind-Value="_selectedModality.isSelected" />
                             </div>
                             <div class="col-md-6">
-                                <label for="modality" class="">@_selectedModality.modality.Name</label>
+                                <label for="modality fs-5" class="">@_selectedModality.modality.Name</label>
                             </div>
                         </div>
                     }
                 </div>
                 <div class="col-lg-6">
                     <div>
+                        <div>
+                            
+                            @*<InputFile OnChange="@OnFileSelection"></InputFile>*@
+                            <div class="row">
+                                <img src="@imgUrl">
+                            </div>
+                        </div>
                         <div class="d-grid gap-2 d-flex justify-content-center">
                             <button @onclick="btnUploadSignature_Clicked" class="btn btn-group-sm btn-primary">Upload Signature</button>
                             <button @onclick="btnClearSignature_Clicked" class="btn btn-group-sm btn-primary">Clear Signature</button>
@@ -252,7 +262,7 @@
     private List<SelectedModality>? lSelectedModality = new();
     private SelectedModality? _selectedModality = new();
     private byte[] imgbyte;
-    private string imgsrc = string.Empty;
+    private string imgUrl = string.Empty;
     IFileListEntry file = null;
 
     private class SelectedModality
@@ -309,9 +319,19 @@
         _radiologist = new ReportConsultant() { };
     }
 
+    private async Task OnFileSelection(InputFileChangeEventArgs e)
+    {
+        IBrowserFile imgFile = e.File;
+        var buffers = new byte[imgFile.Size];
+        await imgFile.OpenReadStream().ReadAsync(buffers);
+        string imageType = imgFile.ContentType;
+        imgUrl =$"data:{imageType};base64,{Convert.ToBase64String(buffers)}";
+    }
+
     protected void btnUploadSignature_Clicked()
     {
-        
+
+
     }
 
     protected void btnClearSignature_Clicked()
@@ -319,6 +339,10 @@
         //signature.Context = null;
     }
 
+    protected void LoadFiles(InputFileChangeEventArgs e)
+    {
+
+    }
     //public Image byteArrayToImage(byte[] bytesArr)
     //{
     //    using (MemoryStream memstr = new MemoryStream(bytesArr))
