@@ -9,80 +9,86 @@
 
 <h3>Create Role</h3>
 <br />
-
-<div class="row">
-    <div class="col-md-6">
-        <EditForm Model="@_role" OnValidSubmit="SaveRole">
-            <div>
-                @foreach(var menu in menus)
-                {
-                    <div class="row d-flex justify-content-center">
-                        <div class="col-md-4 d-flex justify-content-end">
-                            <InputCheckbox id="menu" @bind-Value="menu.isSelectedMenu"></InputCheckbox>
-                        </div>
-                        <div class="col-md-8">
-                            <label for="menu" class="">@menu.projectMenu.Name</label>
-                        </div>
-                    </div>
-                }
-            </div>
-
-            <br />
-
-            <div class="row px-5">
-                <label for="RoleName" class="col-lg-5">Role Name</label>
-                <InputText id="RoleName" class="form-control col-lg-7" @bind-Value="_role.Name"></InputText>
-            </div>
-            <br />
-            <div class="form-group d-flex justify-content-center">
-                <button type="submit" class="btn btn-group-sm btn-primary">Save</button>
-            </div>
-        </EditForm>
-    </div>
-    <div class="col-md-6 px-3">
-        <div class="table table-responsive">
-            <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3 table-striped table-bordered">
-                <thead>
-                    <tr class="fw-bolder text-muted">
-                        <th class="w-5px">
-                            <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                <input
-                                class="form-check-input"
-                                type="checkbox"
-                                hidden
-                                />
+@if (initeRoles == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-6">
+            <EditForm Model="@_role" OnValidSubmit="SaveRole">
+                <div>
+                    @foreach(var menu in menus)
+                    {
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-4 d-flex justify-content-end">
+                                <InputCheckbox id="menu" @bind-Value="menu.isSelectedMenu"></InputCheckbox>
                             </div>
-                        </th>
-                        <th class="min-w-120px text-center">Role Id</th>
-                        <th class="min-w-120px text-center">Role Name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach (var role in initeRoles)
-                {
-                    <tr key={@role.RoleId}>
-                        <td>
-                            <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                <input id="selectedRole" class="form-check-input widget-13-check" type="checkbox" />
+                            <div class="col-md-8">
+                                <label for="menu" class="">@menu.projectMenu.Name</label>
                             </div>
-                        </td>
-                        <td class="text-center">
-                            <p class="text-dark fw-bolder text-hover-primary fs-6">
-                                @role.RoleId
-                            </p>
-                        </td>
-                        <td class="text-center">
-                            <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
-                                @role.Name 
-                            </p>
-                        </td>
-                    </tr>
-                }
-                </tbody>
-            </table>
+                        </div>
+                    }
+                </div>
+
+                <br />
+
+                <div class="row px-5">
+                    <label for="RoleName" class="col-lg-5">Role Name</label>
+                    <InputText id="RoleName" class="form-control col-lg-7" @bind-Value="_role.Name"></InputText>
+                </div>
+                <br />
+                <div class="form-group d-flex justify-content-center">
+                    <button type="submit" class="btn btn-group-sm btn-primary">Save</button>
+                </div>
+            </EditForm>
+        </div>
+        <div class="col-md-6 px-3">
+            <div class="table table-responsive">
+                <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3 table-striped table-bordered">
+                    <thead>
+                        <tr class="fw-bolder text-muted">
+                            <th class="w-5px">
+                                <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                    <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    hidden
+                                    />
+                                </div>
+                            </th>
+                            <th class="min-w-120px text-center">Role Id</th>
+                            <th class="min-w-120px text-center">Role Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var role in initeRoles)
+                    {
+                        <tr key={@role.RoleId}>
+                            <td>
+                                <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                    <input id="selectedRole" class="form-check-input widget-13-check" type="checkbox" />
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <p class="text-dark fw-bolder text-hover-primary fs-6">
+                                    @role.RoleId
+                                </p>
+                            </td>
+                            <td class="text-center">
+                                <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                                    @role.Name 
+                                </p>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
+}
 
 
 @code {

@@ -1,0 +1,285 @@
+@page "/worklist"
+@using RIS_blazor.Shared.Models
+@using RIS_blazor.Shared.Models.VWModels
+@using RIS_blazor.Shared.Models.ApiModel
+@using RIS_blazor.Shared.Repositories
+@using Syncfusion.Blazor.DropDowns
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+
+<br />
+@if (worklists == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+  <div>
+    <div class="row">
+        <div class="col-6">
+            <EditForm Model="@formWorklist" OnValidSubmit="searchFilter">
+                <div class="row">
+                    <div class="row px-5 col-6">
+                        <label for="fromDate" class="col-5 fs-5">From: </label>
+                        <div class="col-7">
+                            <InputDate id="fromDate" @bind-Value="formWorklist.fromDate"></InputDate>
+                        </div>
+                    </div>
+                    <div class="row px-5 col-6">
+                        <label for="toDate" class="col-5 fs-5">To: </label>
+                        <div class="col-7">
+                            <InputDate id="toDate" @bind-Value="formWorklist.toDate"></InputDate>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-4 text-center">
+                        <br />
+                        <label class="fs-5">Setting</label>
+                    </div>
+                    <div class="col-8">
+                        <InputRadioGroup @bind-Value="formWorklist.tValue" TValue="int">
+                            <InputRadio Value="1"></InputRadio> Groups<br />
+                            <InputRadio Value="2"></InputRadio> Item Count<br />
+                            <InputRadio Value="3"></InputRadio> Hot Item<br />
+                        </InputRadioGroup>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-3 text-center">
+                        <label for="filter" class="fs-5">Filter</label>
+                    </div>
+                    <div class="col-9">
+                        <InputText id="filter" class="form-control" @bind-Value="formWorklist.filter"></InputText>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="px-5 col-6">
+                        <label for="rowNumber" class="fs-5">Row Per Page</label>
+                        <InputNumber id="rowNumber" class="my-1" @bind-Value="formWorklist.rowNumber" min="5" max="30" placeholder="15" ></InputNumber>
+                    </div>
+                    <div class="px-5 col-6">
+                        <label for="rowHeight" class="fs-5">Row Height</label>
+                        <InputNumber id="rowHeight" class="my-1" @bind-Value="formWorklist.rowHeight" min="5" max="25" placeholder="20" ></InputNumber>
+                    </div>
+                </div>
+                <br />
+                <div class="btn-sm d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary">Search Studies</button>
+                </div>
+            </EditForm>
+        </div>
+
+        <div class="col-6"></div>
+    </div>
+
+    <br />
+    <hr />
+    <br />
+
+    <div >
+        <table class="table table-responsive table-row-bordered table-row-gray-100 align-middle gs-0 gy-3 table-striped table-bordered" style="height:100vh;overflow-y:scroll">
+            <thead>
+                <tr class="fw-bolder text-muted">
+                    <th class="w-5px">
+                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                            <input
+                            class="form-check-input"
+                            type="checkbox"
+                            hidden
+                            />
+                        </div>
+                    </th>
+                    <th class="text-center"></th>
+                    <th class="text-center"></th>
+                    <th class="text-center">Patient Id</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Patient Name</th>
+                    <th class="text-center">Procedure</th>
+                    <th class="text-center">Clinical History</th>
+                    <th class="text-center">Image</th>
+                    <th class="text-center">Arrival Date Time</th>
+                    <th class="text-center">Hospital/Tenant</th>
+                    <th class="text-center">Modality</th>
+                    <th class="text-center">Radiologist</th>
+                    <th class="text-center">Physician</th>
+                    <th class="text-center">Order Time</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var _worklist in worklists)
+            {
+                <tr key={@_worklist.ProcId}>
+                    <td>
+                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                            <input id="selectedRole" class="form-check-input widget-13-check" type="checkbox" />
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <p></p>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <p></p>
+                        </div>
+                    </td>
+                    <td class="text-center text">
+                        <p class="text-dark fw-bolder text-hover-primary fs-6">
+                            @_worklist.PatientId
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                            @_worklist.StatusString
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                            @_worklist.PatientName
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                            @_worklist.ProcedureHISName
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                            @_worklist.ClinicalHistory
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                            @_worklist.NoOfImages
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                            @_worklist.ArrivalDateTime
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                            @_worklist.HospitalName
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                            @_worklist.Modality
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                            @_worklist.ConsultantName
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                            @_worklist.ReferralPhysician
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                            @_worklist.OrderDateTime
+                        </p>
+                    </td>
+                </tr>
+            }
+            </tbody>
+            <tfoot class="row">
+                    
+            </tfoot>
+        </table>
+        <div class="d-flex justify-content-right justify-content-end col-2 w-100">
+            <div class="">
+                <img src="img/navigate_left2.png" @onclick="@prevPageBtn_Click"/>
+            </div>
+            <div class="">
+                <p>   @PageNo.ToString() / @nPageCount.ToString() (@nTotalItemCount.ToString())   </p>
+            </div>
+            <div class="">
+                <img src="img/navigate_right2.png" @onclick="nextPageBtn_Click"/>
+            </div>
+        </div>
+    </div>
+</div>  
+}
+
+
+@code {
+    private List<VMRISWorklist>? worklists = new();
+
+    private FormWorklist? formWorklist = new();
+    int roleId, tenantId, consultantId, nTotalItemCount;
+    int PageNo { get; set; }
+    int RecsPerPage { get; set; }
+    string? _status, SearchFilter = "s", strGetSearchFilterOnepageItemApiCall;
+    int? nCurPageNumber, nPageCount;
+
+    public class FormWorklist
+    {
+        public DateTime fromDate { get; set; }
+        public DateTime toDate { get; set; }
+        public int tValue { get; set; }
+        public int rowNumber { get; set; }
+        public int rowHeight { get; set; }
+        public string filter { get; set; }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        formWorklist.toDate = await Http.GetFromJsonAsync<DateTime>("Riswork/GetServerDateTime");
+        formWorklist.fromDate = formWorklist.toDate.AddDays(-7);
+        formWorklist.rowHeight = 20;
+        formWorklist.rowNumber = 15;
+        roleId = 1;
+        tenantId = 0;
+        consultantId = 0;
+        PageNo = 1;
+        RecsPerPage = 15;
+        _status = "All";
+        //SearchFilter = formWorklist.filter;
+
+        //localhost:7165/Riswork/GetSearchFilterIncompleteOnePageItems?_dateFrom=2021%2F10%2F1&_dateTo=2021%2F11%2F28&roleId=1&tenantId=1&consultantId=1&_status=All&SearchFilter=s&PageNo=1&RecsPerPage=15
+        //string strGetSearchFilterOnepageItemApiCall = $"_dateFrom={formWorklist.fromDate}&_dateTo={formWorklist.toDate}&roleId={roleId}&tenantId={tenantId}&consultantId={consultantId}&_status={_status}&SearchFilter={SearchFilter}&PageNo={PageNo}&RecsPerPage={RecsPerPage}";
+        strGetSearchFilterOnepageItemApiCall = $"_dateFrom=2021%2F10%2F1&_dateTo=2021%2F11%2F28&roleId=1&tenantId=1&consultantId=1&_status=All&SearchFilter=" + SearchFilter + "&PageNo=1&RecsPerPage=15";
+
+        worklists = await Http.GetFromJsonAsync<List<VMRISWorklist>>("Riswork/GetSearchFilterIncompleteOnePageItems?" + strGetSearchFilterOnepageItemApiCall);
+
+        //localhost:7165/Riswork/GetCompletedItemCount?_dateFrom=2021%2F10%2F1&_dateTo=2021%2F11%2F28&roleId=0&tenantId=0&consultantId=0&_status=All&SearchFilter=s
+        //string strGetItemCountApiCall = $"_dateFrom={formWorklist.fromDate}&_dateTo={formWorklist.toDate}&roleId={roleId}&tenantId={tenantId}&consultantId={consultantId}&_status={_status}&SearchFilter={SearchFilter}";
+        string strGetItemCountApiCall = $"_dateFrom=2021%2F10%2F1&_dateTo=2021%2F11%2F28&roleId={roleId}&tenantId={tenantId}&consultantId={consultantId}&_status={_status}&SearchFilter={SearchFilter}";
+        nTotalItemCount = await Http.GetFromJsonAsync<int>("Riswork/GetIncompleteItemCount?" + strGetItemCountApiCall);
+
+        nPageCount = (nTotalItemCount % formWorklist.rowNumber == 0) ? nTotalItemCount / formWorklist.rowNumber : nTotalItemCount / formWorklist.rowNumber + 1;
+
+    }
+
+    private async Task searchFilter()
+    {
+
+    }
+
+    private async void nextPageBtn_Click()
+    {
+        PageNo++;
+        nPageCount++;
+
+        strGetSearchFilterOnepageItemApiCall = $"_dateFrom=2021%2F10%2F1&_dateTo=2021%2F11%2F28&roleId={roleId}&tenantId={tenantId}&consultantId={consultantId}&_status={_status}&SearchFilter={SearchFilter}&PageNo={PageNo}&RecsPerPage={RecsPerPage}";
+        NavigationManager.NavigateTo("worklist", true);
+    }
+
+    private async void prevPageBtn_Click()
+    {
+        PageNo--;
+        nPageCount--;
+
+        strGetSearchFilterOnepageItemApiCall = $"_dateFrom=2021%2F10%2F1&_dateTo=2021%2F11%2F28&roleId={roleId}&tenantId={tenantId}&consultantId={consultantId}&_status={_status}&SearchFilter={SearchFilter}&PageNo={PageNo}&RecsPerPage={RecsPerPage}";
+        NavigationManager.NavigateTo("worklist", true);
+    }
+}

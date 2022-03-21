@@ -796,6 +796,15 @@ namespace RIS_blazor.Server.Repositories
 
         internal async Task<List<VMRISWorklist>> GetSearchFilterIncompleteOnePageItems(DateTime datefrm, DateTime dateto, int roleId, int TenantId, int ConsultantId, string status, string SearchFilter, int PageNo, int RecsPerPage)
         {
+            //string _searchFilter;
+            //if (SearchFilter == "ww")
+            //{
+            //    _searchFilter = "s";
+            //}
+            //else { 
+            //    _searchFilter = SearchFilter; 
+            //}
+
             return await Task.Run(async () =>
             {
                 List<VMRISWorklist> _workListItems;
@@ -804,8 +813,8 @@ namespace RIS_blazor.Server.Repositories
                     try
                     {
                         using (var multi = await conn.QueryMultipleAsync("Exec spGetInCompleteWorklistItems " +
-                            "@datefrm, @dateto, @roleId, @TenantId, @ConsultantId, @Status, @SearchFilter, @PageNo,  @RecsPerPage"
-                              , new { datefrm = datefrm, dateto = dateto, roleId = roleId, TenantId = TenantId, ConsultantId = ConsultantId, Status = status, SearchFilter = SearchFilter, PageNo = PageNo, RecsPerPage = RecsPerPage }))
+                            "@datefrm, @dateto, @roleId, @TenantId, @ConsultantId, @Status, @SearchFilter, @PageNo,  @_RecsPerPage"
+                              , new { datefrm = datefrm, dateto = dateto, roleId = roleId, TenantId = TenantId, ConsultantId = ConsultantId, Status = status, SearchFilter = SearchFilter, PageNo = PageNo, _RecsPerPage = RecsPerPage }))
                         {
                             _workListItems = multi.Read<VMRISWorklist>().ToList();
                         }
@@ -817,9 +826,6 @@ namespace RIS_blazor.Server.Repositories
                         Console.WriteLine(ex.Message);
                         return null;
                     }
-
-
-
                 }
 
             });
