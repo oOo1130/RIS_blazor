@@ -15,194 +15,216 @@
 else
 {
   <div>
-    <div class="row">
-        <div class="col-6">
-            <EditForm Model="@formWorklist" OnValidSubmit="searchFilter">
-                <div class="row">
-                    <div class="row px-5 col-6">
-                        <label for="fromDate" class="col-5 fs-5">From: </label>
-                        <div class="col-7">
-                            <InputDate id="fromDate" @bind-Value="formWorklist.fromDate"></InputDate>
+    <div class="row d-flex justify-content-center">
+        <div class="col-6 card border-1 p-4">
+            <div class="card-header text-hover-primary">
+                <h3>Search Filter</h3>
+            </div>
+            <div class="card-body">
+                
+                <EditForm Model="@formWorklist" OnValidSubmit="searchFilter">
+                    <div class="row">
+                        <div class="row px-5 col-6">
+                            <label for="fromDate" class="col-5 fs-5">From: </label>
+                            <div class="col-7">
+                                <InputDate id="fromDate" @bind-Value="formWorklist.fromDate"></InputDate>
+                            </div>
+                        </div>
+                        <div class="row px-5 col-6">
+                            <label for="toDate" class="col-5 fs-5">To: </label>
+                            <div class="col-7">
+                                <InputDate id="toDate" @bind-Value="formWorklist.toDate"></InputDate>
+                            </div>
                         </div>
                     </div>
-                    <div class="row px-5 col-6">
-                        <label for="toDate" class="col-5 fs-5">To: </label>
-                        <div class="col-7">
-                            <InputDate id="toDate" @bind-Value="formWorklist.toDate"></InputDate>
+                    <br />
+                    <div class="row">
+                        <div class="col-4 text-center">
+                            <br />
+                            <label class="fs-5">Setting</label>
+                        </div>
+                        <div class="col-8">
+                            <InputRadioGroup @bind-Value="formWorklist.tValue" TValue="int">
+                                <InputRadio Value="1"></InputRadio> Groups<br />
+                                <InputRadio Value="2"></InputRadio> Item Count<br />
+                                <InputRadio Value="3"></InputRadio> Hot Item<br />
+                            </InputRadioGroup>
                         </div>
                     </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-4 text-center">
-                        <br />
-                        <label class="fs-5">Setting</label>
+                    <br />
+                    <div class="row">
+                        <div class="col-3 text-center">
+                            <label for="filter" class="fs-5">Filter</label>
+                        </div>
+                        <div class="col-9">
+                            <InputText id="filter" class="form-control" @bind-Value="formWorklist.filter"></InputText>
+                        </div>
                     </div>
-                    <div class="col-8">
-                        <InputRadioGroup @bind-Value="formWorklist.tValue" TValue="int">
-                            <InputRadio Value="1"></InputRadio> Groups<br />
-                            <InputRadio Value="2"></InputRadio> Item Count<br />
-                            <InputRadio Value="3"></InputRadio> Hot Item<br />
-                        </InputRadioGroup>
+                    <br />
+                    <div class="row">
+                        <div class="px-5 col-6">
+                            <label for="rowNumber" class="fs-5">Row Per Page</label>
+                            <InputNumber id="rowNumber" class="my-1" @bind-Value="formWorklist.rowNumber" min="5" max="30" placeholder="15" ></InputNumber>
+                        </div>
+                        <div class="px-5 col-6">
+                            <label for="rowHeight" class="fs-5">Row Height</label>
+                            <InputNumber id="rowHeight" class="my-1" @bind-Value="formWorklist.rowHeight" min="5" max="25" placeholder="20" ></InputNumber>
+                        </div>
                     </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-3 text-center">
-                        <label for="filter" class="fs-5">Filter</label>
+                    <br />
+                    <div class="btn-sm d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary">Search Studies</button>
                     </div>
-                    <div class="col-9">
-                        <InputText id="filter" class="form-control" @bind-Value="formWorklist.filter"></InputText>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="px-5 col-6">
-                        <label for="rowNumber" class="fs-5">Row Per Page</label>
-                        <InputNumber id="rowNumber" class="my-1" @bind-Value="formWorklist.rowNumber" min="5" max="30" placeholder="15" ></InputNumber>
-                    </div>
-                    <div class="px-5 col-6">
-                        <label for="rowHeight" class="fs-5">Row Height</label>
-                        <InputNumber id="rowHeight" class="my-1" @bind-Value="formWorklist.rowHeight" min="5" max="25" placeholder="20" ></InputNumber>
-                    </div>
-                </div>
-                <br />
-                <div class="btn-sm d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary">Search Studies</button>
-                </div>
-            </EditForm>
+                </EditForm>
+        
+            </div>
         </div>
-
-        <div class="col-6"></div>
     </div>
 
     <br />
     <hr />
     <br />
 
-    <div >
-        <table class="table table-responsive table-row-bordered table-row-gray-100 align-middle gs-0 gy-3 table-striped table-bordered" style="height:100vh;overflow-y:scroll">
-            <thead>
-                <tr class="fw-bolder text-muted">
-                    <th class="w-5px">
-                        <div class="form-check form-check-sm form-check-custom form-check-solid">
-                            <input
-                            class="form-check-input"
-                            type="checkbox"
-                            hidden
-                            />
-                        </div>
-                    </th>
-                    <th class="text-center"></th>
-                    <th class="text-center"></th>
-                    <th class="text-center">Patient Id</th>
-                    <th class="text-center">Status</th>
-                    <th class="text-center">Patient Name</th>
-                    <th class="text-center">Procedure</th>
-                    <th class="text-center">Clinical History</th>
-                    <th class="text-center">Image</th>
-                    <th class="text-center">Arrival Date Time</th>
-                    <th class="text-center">Hospital/Tenant</th>
-                    <th class="text-center">Modality</th>
-                    <th class="text-center">Radiologist</th>
-                    <th class="text-center">Physician</th>
-                    <th class="text-center">Order Time</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach (var _worklist in worklists)
-            {
-                <tr key={@_worklist.ProcId}>
-                    <td>
-                        <div class="form-check form-check-sm form-check-custom form-check-solid">
-                            <input id="selectedRole" class="form-check-input widget-13-check" type="checkbox" />
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <p></p>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <p></p>
-                        </div>
-                    </td>
-                    <td class="text-center text">
-                        <p class="text-dark fw-bolder text-hover-primary fs-6">
-                            @_worklist.PatientId
-                        </p>
-                    </td>
-                    <td class="text-center">
-                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
-                            @_worklist.StatusString
-                        </p>
-                    </td>
-                    <td class="text-center">
-                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
-                            @_worklist.PatientName
-                        </p>
-                    </td>
-                    <td class="text-center">
-                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
-                            @_worklist.ProcedureHISName
-                        </p>
-                    </td>
-                    <td class="text-center">
-                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
-                            @_worklist.ClinicalHistory
-                        </p>
-                    </td>
-                    <td class="text-center">
-                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
-                            @_worklist.NoOfImages
-                        </p>
-                    </td>
-                    <td class="text-center">
-                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
-                            @_worklist.ArrivalDateTime
-                        </p>
-                    </td>
-                    <td class="text-center">
-                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
-                            @_worklist.HospitalName
-                        </p>
-                    </td>
-                    <td class="text-center">
-                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
-                            @_worklist.Modality
-                        </p>
-                    </td>
-                    <td class="text-center">
-                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
-                            @_worklist.ConsultantName
-                        </p>
-                    </td>
-                    <td class="text-center">
-                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
-                            @_worklist.ReferralPhysician
-                        </p>
-                    </td>
-                    <td class="text-center">
-                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
-                            @_worklist.OrderDateTime
-                        </p>
-                    </td>
-                </tr>
-            }
-            </tbody>
-            <tfoot class="row">
+    <div class="card border-1">
+        <div class="row card-header text-hover-primary">
+            <div class="col-4 d-flex justify-content-center">
+                <h3>WorkList</h3>
+            </div>
+            @*<div class="col-8 d-flex justify-content-right justify-content-end w-100">
+                <button class="btn btn-group btn-sm px-4"><img src="img/Move.png" class="pt-1" /> Assign To Radiologist</button>
+                <button class="btn btn-group btn-sm px-4"><img src="img/Delete.png" class="pt-1" /> Cancel Assignment</button>
+            </div>*@
+        </div>
+        <div class="card-body">
+            <table class="table table-responsive table-row-bordered table-row-gray-100 align-middle gs-0 gy-3 table-striped table-bordered" style="height:100vh;overflow-y:scroll">
+                <thead>
+                    <tr class="fw-bolder text-muted">
+                        <th class="w-5px">
+                            <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                <input
+                                class="form-check-input"
+                                type="checkbox"
+                                hidden
+                                />
+                            </div>
+                        </th>
+                        <th class="text-center"></th>
+                        <th class="text-center"></th>
+                        <th class="text-center">Patient Id</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Patient Name</th>
+                        <th class="text-center">Procedure</th>
+                        <th class="text-center">Clinical History</th>
+                        <th class="text-center">Image</th>
+                        <th class="text-center">Arrival Date Time</th>
+                        <th class="text-center">Hospital/Tenant</th>
+                        <th class="text-center">Modality</th>
+                        <th class="text-center">Radiologist</th>
+                        <th class="text-center">Physician</th>
+                        <th class="text-center">Order Time</th>
+                        <th class="text-center">Event</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var _worklist in worklists)
+                {
+                    <tr key={@_worklist.ProcId}>
+                        <td>
+                            <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                <input id="selectedRole" class="form-check-input widget-13-check" type="checkbox" />
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <img src="img/RVIcon.png" />
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <img src="img/EMSLViewer2.png" />
+                            </div>
+                        </td>
+                        <td class="text-center text">
+                            <p class="text-dark fw-bolder text-hover-primary fs-6">
+                                @_worklist.PatientId
+                            </p>
+                        </td>
+                        <td class="text-center">
+                            <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                                @_worklist.StatusString
+                            </p>
+                        </td>
+                        <td class="text-center">
+                            <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                                @_worklist.PatientName
+                            </p>
+                        </td>
+                        <td class="text-center">
+                            <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                                @_worklist.ProcedureHISName
+                            </p>
+                        </td>
+                        <td class="text-center">
+                            <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                                @_worklist.ClinicalHistory
+                            </p>
+                        </td>
+                        <td class="text-center">
+                            <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                                @_worklist.NoOfImages
+                            </p>
+                        </td>
+                        <td class="text-center">
+                            <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                                @_worklist.ArrivalDateTime
+                            </p>
+                        </td>
+                        <td class="text-center">
+                            <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                                @_worklist.HospitalName
+                            </p>
+                        </td>
+                        <td class="text-center">
+                            <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                                @_worklist.Modality
+                            </p>
+                        </td>
+                        <td class="text-center">
+                            <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                                @_worklist.ConsultantName
+                            </p>
+                        </td>
+                        <td class="text-center">
+                            <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                                @_worklist.ReferralPhysician
+                            </p>
+                        </td>
+                        <td class="text-center">
+                            <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                                @_worklist.OrderDateTime
+                            </p>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-group btn-sm btn-primary my-1">Assign</button>
+                            <button class="btn btn-group btn-sm btn-primary my-1">Cancel</button>
+                        </td>
+                          
+                    </tr>
+                }
+                </tbody>
+                <tfoot class="row">
                     
-            </tfoot>
-        </table>
-        <div class="d-flex justify-content-right justify-content-end col-2 w-100">
-            <div class="">
+                </tfoot>
+            </table>
+        </div>
+        <div class="card-footer d-flex justify-content-right justify-content-end col-2 w-100">
+            <div class="px-4">
                 <img src="img/navigate_left2.png" @onclick="@prevPageBtn_Click"/>
             </div>
             <div class="">
-                <p>   @PageNo.ToString() / @nPageCount.ToString() (@nTotalItemCount.ToString())   </p>
+                <p>@PageNo.ToString() / @nPageCount.ToString() (@nTotalItemCount.ToString())</p>
             </div>
-            <div class="">
+            <div class="px-4">
                 <img src="img/navigate_right2.png" @onclick="nextPageBtn_Click"/>
             </div>
         </div>
@@ -244,10 +266,46 @@ else
         RecsPerPage = 15;
         _status = "All";
         //SearchFilter = formWorklist.filter;
+        
+        //strGetSearchFilterOnepageItemApiCall = $"_dateFrom={formWorklist.fromDate}&_dateTo={formWorklist.toDate}&roleId={roleId}&tenantId={tenantId}&consultantId={consultantId}&_status={_status}&SearchFilter={SearchFilter}&PageNo={PageNo}&RecsPerPage={RecsPerPage}";
+        strGetSearchFilterOnepageItemApiCall = $"_dateFrom=2021%2F10%2F1&_dateTo=2021%2F11%2F28&roleId={roleId}&tenantId={tenantId}&consultantId={consultantId}&_status={_status}&SearchFilter={SearchFilter}&PageNo={PageNo}&RecsPerPage={RecsPerPage}";
 
+        worklists = await Http.GetFromJsonAsync<List<VMRISWorklist>>("Riswork/GetSearchFilterIncompleteOnePageItems?" + strGetSearchFilterOnepageItemApiCall);
+
+        //string strGetItemCountApiCall = $"_dateFrom={formWorklist.fromDate}&_dateTo={formWorklist.toDate}&roleId={roleId}&tenantId={tenantId}&consultantId={consultantId}&_status={_status}&SearchFilter={SearchFilter}";
+        string strGetItemCountApiCall = $"_dateFrom=2021%2F10%2F1&_dateTo=2021%2F11%2F28&roleId={roleId}&tenantId={tenantId}&consultantId={consultantId}&_status={_status}&SearchFilter={SearchFilter}";
+        nTotalItemCount = await Http.GetFromJsonAsync<int>("Riswork/GetIncompleteItemCount?" + strGetItemCountApiCall);
+        nPageCount = (nTotalItemCount % formWorklist.rowNumber == 0) ? nTotalItemCount / formWorklist.rowNumber : nTotalItemCount / formWorklist.rowNumber + 1;
+    }
+
+    private async Task searchFilter()
+    {
+        RecsPerPage = formWorklist.rowNumber;
+
+        showWorklistTable();
+    }
+
+    private async void nextPageBtn_Click()
+    {
+        PageNo++;
+        nPageCount++;
+
+        showWorklistTable();
+    }
+
+    private async void prevPageBtn_Click()
+    {
+        PageNo--;
+        nPageCount--;
+
+        showWorklistTable();
+    }
+
+    public async void showWorklistTable()
+    {
         //localhost:7165/Riswork/GetSearchFilterIncompleteOnePageItems?_dateFrom=2021%2F10%2F1&_dateTo=2021%2F11%2F28&roleId=1&tenantId=1&consultantId=1&_status=All&SearchFilter=s&PageNo=1&RecsPerPage=15
-        //string strGetSearchFilterOnepageItemApiCall = $"_dateFrom={formWorklist.fromDate}&_dateTo={formWorklist.toDate}&roleId={roleId}&tenantId={tenantId}&consultantId={consultantId}&_status={_status}&SearchFilter={SearchFilter}&PageNo={PageNo}&RecsPerPage={RecsPerPage}";
-        strGetSearchFilterOnepageItemApiCall = $"_dateFrom=2021%2F10%2F1&_dateTo=2021%2F11%2F28&roleId=1&tenantId=1&consultantId=1&_status=All&SearchFilter=" + SearchFilter + "&PageNo=1&RecsPerPage=15";
+        //strGetSearchFilterOnepageItemApiCall = $"_dateFrom={formWorklist.fromDate}&_dateTo={formWorklist.toDate}&roleId={roleId}&tenantId={tenantId}&consultantId={consultantId}&_status={_status}&SearchFilter={SearchFilter}&PageNo={PageNo}&RecsPerPage={RecsPerPage}";
+        strGetSearchFilterOnepageItemApiCall = $"_dateFrom=2021%2F10%2F1&_dateTo=2021%2F11%2F28&roleId={roleId}&tenantId={tenantId}&consultantId={consultantId}&_status={_status}&SearchFilter={SearchFilter}&PageNo={PageNo}&RecsPerPage={RecsPerPage}";
 
         worklists = await Http.GetFromJsonAsync<List<VMRISWorklist>>("Riswork/GetSearchFilterIncompleteOnePageItems?" + strGetSearchFilterOnepageItemApiCall);
 
@@ -258,28 +316,5 @@ else
 
         nPageCount = (nTotalItemCount % formWorklist.rowNumber == 0) ? nTotalItemCount / formWorklist.rowNumber : nTotalItemCount / formWorklist.rowNumber + 1;
 
-    }
-
-    private async Task searchFilter()
-    {
-
-    }
-
-    private async void nextPageBtn_Click()
-    {
-        PageNo++;
-        nPageCount++;
-
-        strGetSearchFilterOnepageItemApiCall = $"_dateFrom=2021%2F10%2F1&_dateTo=2021%2F11%2F28&roleId={roleId}&tenantId={tenantId}&consultantId={consultantId}&_status={_status}&SearchFilter={SearchFilter}&PageNo={PageNo}&RecsPerPage={RecsPerPage}";
-        NavigationManager.NavigateTo("worklist", true);
-    }
-
-    private async void prevPageBtn_Click()
-    {
-        PageNo--;
-        nPageCount--;
-
-        strGetSearchFilterOnepageItemApiCall = $"_dateFrom=2021%2F10%2F1&_dateTo=2021%2F11%2F28&roleId={roleId}&tenantId={tenantId}&consultantId={consultantId}&_status={_status}&SearchFilter={SearchFilter}&PageNo={PageNo}&RecsPerPage={RecsPerPage}";
-        NavigationManager.NavigateTo("worklist", true);
     }
 }
