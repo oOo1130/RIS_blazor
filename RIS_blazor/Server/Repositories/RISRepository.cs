@@ -1147,47 +1147,44 @@ namespace RIS_blazor.Server.Repositories
             }
         }
 
-        internal bool CancelAssignedToRadiologist(List<SelectedProcedureForAssign> selectedWorklists)
+        internal bool CancelAssignedToRadiologist(VMRISWorklist selectedWorklists)
         {
             using (CoreDbContext context = new CoreDbContext())
             {
                 try
                 {
-                    foreach (var item in selectedWorklists)
+                    RISWorkList _wListObj = context.RISWorkLists.Where(x => x.ProcId == selectedWorklists.ProcId).FirstOrDefault();
+                    if (_wListObj != null)
                     {
-                        RISWorkList _wListObj = context.RISWorkLists.Where(x => x.ProcId == item.ProcId).FirstOrDefault();
-                        if (_wListObj != null)
+                        HttpClient client;
+                        using (client = new HttpClient())
                         {
-                            HttpClient client;
-                            using (client = new HttpClient())
+                            client.BaseAddress = new Uri("https://test.emslbd.com"); //new Uri("http://115.69.214.82:8080");  
+                            client.DefaultRequestHeaders.Accept.Clear();
+                            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                            var username = "Administrator";
+                            var password = "Admin@)@!emslbd";
+
+                            string encoded = System.Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1")
+                                                    .GetBytes(username + ":" + password));
+                            client.DefaultRequestHeaders.Add("OCS-APIRequest", "true");
+                            client.DefaultRequestHeaders.Add("Authorization", "Basic " + encoded);
+
+                            var task = Task.Run(async () => await client.DeleteAsync("/ocs/v2.php/apps/files_sharing/api/v1/shares/" + _wListObj.Share_Id));
+                            HttpResponseMessage response = task.GetAwaiter().GetResult();
+                            if (response.IsSuccessStatusCode || !response.IsSuccessStatusCode)
                             {
-                                client.BaseAddress = new Uri("https://test.emslbd.com"); //new Uri("http://115.69.214.82:8080");  
-                                client.DefaultRequestHeaders.Accept.Clear();
-                                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                                var username = "Administrator";
-                                var password = "Admin@)@!emslbd";
-
-                                string encoded = System.Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1")
-                                                       .GetBytes(username + ":" + password));
-                                client.DefaultRequestHeaders.Add("OCS-APIRequest", "true");
-                                client.DefaultRequestHeaders.Add("Authorization", "Basic " + encoded);
-
-                                var task = Task.Run(async () => await client.DeleteAsync("/ocs/v2.php/apps/files_sharing/api/v1/shares/" + _wListObj.Share_Id));
-                                HttpResponseMessage response = task.GetAwaiter().GetResult();
-                                if (response.IsSuccessStatusCode || !response.IsSuccessStatusCode)
-                                {
-
-                                    _wListObj.ConsultantId = item.ConsultantID;
-                                    _wListObj.Status = item.Status;
-                                    _wListObj.Share_Id = null;
-                                    context.Entry(_wListObj).State = EntityState.Modified;
-                                    context.SaveChanges();
-                                }
+                                _wListObj.ConsultantId = selectedWorklists.ConsultantId;
+                                _wListObj.Status = selectedWorklists.Status;
+                                _wListObj.Share_Id = null;
+                                context.Entry(_wListObj).State = EntityState.Modified;
+                                context.SaveChanges();
                             }
-
-
                         }
+
+
                     }
                     return true;
 

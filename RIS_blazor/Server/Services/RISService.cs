@@ -130,9 +130,9 @@ namespace RIS_blazor.Server.Services
             return new RISRepository(_context).SaveConsultantOpinionOnStudy(opinion);
         }
 
-        internal bool CancelAssignedToRadiologist(List<SelectedProcedureForAssign> selectedWorklists)
+        internal bool CancelAssignedToRadiologist(VMRISWorklist vMRISWorklist)
         {
-            return new RISRepository(_context).CancelAssignedToRadiologist(selectedWorklists);
+            return new RISRepository(_context).CancelAssignedToRadiologist(vMRISWorklist);
         }
 
         internal bool UpdateRISWorklist(RISWorkList workList)

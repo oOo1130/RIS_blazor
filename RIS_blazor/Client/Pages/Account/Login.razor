@@ -1,0 +1,74 @@
+﻿@page "/login"
+@using RIS_blazor.Shared.Models
+@using RIS_blazor.Shared.Models.VWModels
+@using RIS_blazor.Shared.Models.ApiModel
+@using RIS_blazor.Shared.Repositories
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+
+<h3>Login</h3>
+
+<div class="row card">
+    <div class="col-6 p-4">
+        <img src="img/Emis_Slide.jpg"/>
+    </div>
+    <div class="card col-6">
+        <h4 class="card-header">Login</h4>
+        <div class="card-body">
+            <EditForm Model="@loginInfo" OnValidSubmit="CheckLogin">
+                <DataAnnotationsValidator />
+                <div class="form-group">
+                    <label>Username</label>
+                    <InputText @bind-Value="loginInfo.userName" class="form-control" />
+                    <ValidationMessage For="@(() => loginInfo.userName)" />
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <InputText @bind-Value="loginInfo.password" type="password" class="form-control" />
+                    <ValidationMessage For="@(() => loginInfo.password)" />
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button disabled="@loading" class="btn btn-primary">
+                        @if (loading)
+                        {
+                            <span class="spinner-border spinner-border-sm mr-1"></span>
+                        }
+                        Login
+                    </button>
+                    <NavLink href="/register" class="btn btn-link">Register</NavLink>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+
+</div>
+
+@code {
+    private LoginInfo loginInfo = new();
+    private bool loading;
+    public class LoginInfo
+    {
+        public string userName{ get; set; }
+        public string password{ get; set; }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
+
+    private async void CheckLogin()
+    {
+        loading = true;
+        string strloginInfo = $"userName={loginInfo.userName}&password={loginInfo.password}";
+        string? result = await Http.GetFromJsonAsync<string>("Riswork/Login?" + strloginInfo);
+        if(result != null)
+        {
+            NavigationManager.NavigateTo("/", true);
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/login", true);
+        }
+    }
+}

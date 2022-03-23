@@ -6,7 +6,7 @@
 <div class="@NavMenuCssClass"  @onclick="ToggleNavMenu">
     <ul class="flex-grow-1">
 
-            @if (menuItems == null)
+        @if (menuItems == null)
         {
             <p><em>Loading...</em></p>
         }
@@ -14,7 +14,7 @@
         {
             @foreach(MainMenuItem item in menuItems)
             {
-                <li>
+                <li class="btn btn-dark">
                     <a href=@item.menuTo>
                         @item.menuTitle
                     </a>
@@ -22,7 +22,7 @@
             }
         }
 
-        <li class="dropdown">
+        <li class="dropdown btn btn-dark p-1">
             <a href="javascript:void(0)" class="dropbtn">Setting</a>
             <div class="dropdown-content">
                 <a href="user">
@@ -38,6 +38,9 @@
                     Add/Edit Consultant
                 </a>
             </div>
+        </li>
+        <li class="btn btn-dark p-1">
+            <NavLink href="/logout" class="btn btn-dark">Logout</NavLink>
         </li>
     </ul>
 </div>

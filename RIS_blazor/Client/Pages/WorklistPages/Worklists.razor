@@ -205,8 +205,8 @@ else
                             </p>
                         </td>
                         <td class="text-center">
-                            <button class="btn btn-group btn-sm btn-primary my-1">Assign</button>
-                            <button class="btn btn-group btn-sm btn-primary my-1">Cancel</button>
+                            <button class="btn btn-group btn-sm btn-primary my-1" onclick="assignRadiologist">Assign</button>
+                            <button class="btn btn-group btn-sm btn-danger my-1" onclick="(() => cancelAssignment(@_worklist))">Cancel</button>
                         </td>
                           
                     </tr>
@@ -232,10 +232,9 @@ else
 </div>  
 }
 
-
 @code {
     private List<VMRISWorklist>? worklists = new();
-
+    private VMRISWorklistSubSetForLV vmWLObj;
     private FormWorklist? formWorklist = new();
     int roleId, tenantId, consultantId, nTotalItemCount;
     int PageNo { get; set; }
@@ -266,7 +265,7 @@ else
         RecsPerPage = 15;
         _status = "All";
         //SearchFilter = formWorklist.filter;
-        
+
         //strGetSearchFilterOnepageItemApiCall = $"_dateFrom={formWorklist.fromDate}&_dateTo={formWorklist.toDate}&roleId={roleId}&tenantId={tenantId}&consultantId={consultantId}&_status={_status}&SearchFilter={SearchFilter}&PageNo={PageNo}&RecsPerPage={RecsPerPage}";
         strGetSearchFilterOnepageItemApiCall = $"_dateFrom=2021%2F10%2F1&_dateTo=2021%2F11%2F28&roleId={roleId}&tenantId={tenantId}&consultantId={consultantId}&_status={_status}&SearchFilter={SearchFilter}&PageNo={PageNo}&RecsPerPage={RecsPerPage}";
 
@@ -288,7 +287,6 @@ else
     private async void nextPageBtn_Click()
     {
         PageNo++;
-        nPageCount++;
 
         showWorklistTable();
     }
@@ -296,25 +294,26 @@ else
     private async void prevPageBtn_Click()
     {
         PageNo--;
-        nPageCount--;
 
         showWorklistTable();
     }
 
     public async void showWorklistTable()
     {
-        //localhost:7165/Riswork/GetSearchFilterIncompleteOnePageItems?_dateFrom=2021%2F10%2F1&_dateTo=2021%2F11%2F28&roleId=1&tenantId=1&consultantId=1&_status=All&SearchFilter=s&PageNo=1&RecsPerPage=15
-        //strGetSearchFilterOnepageItemApiCall = $"_dateFrom={formWorklist.fromDate}&_dateTo={formWorklist.toDate}&roleId={roleId}&tenantId={tenantId}&consultantId={consultantId}&_status={_status}&SearchFilter={SearchFilter}&PageNo={PageNo}&RecsPerPage={RecsPerPage}";
         strGetSearchFilterOnepageItemApiCall = $"_dateFrom=2021%2F10%2F1&_dateTo=2021%2F11%2F28&roleId={roleId}&tenantId={tenantId}&consultantId={consultantId}&_status={_status}&SearchFilter={SearchFilter}&PageNo={PageNo}&RecsPerPage={RecsPerPage}";
 
         worklists = await Http.GetFromJsonAsync<List<VMRISWorklist>>("Riswork/GetSearchFilterIncompleteOnePageItems?" + strGetSearchFilterOnepageItemApiCall);
 
-        //localhost:7165/Riswork/GetCompletedItemCount?_dateFrom=2021%2F10%2F1&_dateTo=2021%2F11%2F28&roleId=0&tenantId=0&consultantId=0&_status=All&SearchFilter=s
-        //string strGetItemCountApiCall = $"_dateFrom={formWorklist.fromDate}&_dateTo={formWorklist.toDate}&roleId={roleId}&tenantId={tenantId}&consultantId={consultantId}&_status={_status}&SearchFilter={SearchFilter}";
         string strGetItemCountApiCall = $"_dateFrom=2021%2F10%2F1&_dateTo=2021%2F11%2F28&roleId={roleId}&tenantId={tenantId}&consultantId={consultantId}&_status={_status}&SearchFilter={SearchFilter}";
         nTotalItemCount = await Http.GetFromJsonAsync<int>("Riswork/GetIncompleteItemCount?" + strGetItemCountApiCall);
 
         nPageCount = (nTotalItemCount % formWorklist.rowNumber == 0) ? nTotalItemCount / formWorklist.rowNumber : nTotalItemCount / formWorklist.rowNumber + 1;
 
+    }
+
+    private async void cancelAssignment(VMRISWorklist vMRISWorklist)
+    {
+        var result = Http.PostAsJsonAsync<VMRISWorklist>("Riswork/CancelAssignedToRadiologist", vMRISWorklist);
+        //if(result.Result == )
     }
 }

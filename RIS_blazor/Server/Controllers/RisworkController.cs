@@ -128,13 +128,13 @@ namespace RIS_blazor.Server.Controllers
         }
 
         [HttpPost("CancelAssignedToRadiologist")]
-        public IActionResult CancelAssignedToRadiologist(List<SelectedProcedureForAssign> _selectedWorklists)
+        public IActionResult CancelAssignedToRadiologist(VMRISWorklist vMRISWorklist)
         {
-            if (_selectedWorklists == null)
+            if (vMRISWorklist == null)
             {
                 return BadRequest();
             }
-            if (new RISService(_context).CancelAssignedToRadiologist(_selectedWorklists))
+            if (new RISService(_context).CancelAssignedToRadiologist(vMRISWorklist))
             {
                 return Ok();
             }

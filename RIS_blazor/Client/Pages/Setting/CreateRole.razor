@@ -3,20 +3,22 @@
 @using RIS_blazor.Shared.Models.VWModels
 @using RIS_blazor.Shared.Models.ApiModel
 @using RIS_blazor.Shared.Repositories
-@using Syncfusion.Blazor.DropDowns
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
 
-<h3>Create Role</h3>
 <br />
+
 @if (initeRoles == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <div class="row">
-        <div class="col-md-6">
+    <div class="row card">
+        <div class="card-title">
+            <h3>Create Role</h3>
+        </div>
+        <div class="col-md-6 card-body">
             <EditForm Model="@_role" OnValidSubmit="SaveRole">
                 <div>
                     @foreach(var menu in menus)
