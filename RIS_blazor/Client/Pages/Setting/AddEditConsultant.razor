@@ -13,244 +13,247 @@
 @inject NavigationManager NavigationManager;
 @inject HttpClient Http
 
-<h3>Add/Edit Consultant</h3>
-<div class="row">
-    <div class="col-md-7">
-        <EditForm Model="@_radiologist" OnValidSubmit="SaveConsultant">
-            <DataAnnotationsValidator />
-            <div class="row my-3">
-                <div class="col-md-7 row">
-                    <label class="form-label col-md-5 fs-5">Consultant Name</label>
-                    <div class="col-md-7 px-3">
-                        <InputText class="form-control" @bind-Value="_radiologist.Name" />
-                    </div>
-                    <ValidationMessage For="@(() => _radiologist.Name)" />
-                </div>
-                <div class="col-md-5 row">
-                    <label class="form-label col-md-5 fs-5">Font Size</label>
-                    <div class="col-md-7">
-                        <InputNumber class="form-control" @bind-Value="_radiologist.Fsize1" />
-                    </div>
-                    <ValidationMessage For="@(() => _radiologist.Fsize1)" />
-                </div>
-            </div>
-            <div class="row my-3">
-                <div class=" col-md-7 row">
-                    <label class="form-label col-md-5 fs-5">Identify-1</label>
-                    <div class="col-md-7 px-3">
-                        <InputText class="form-control" @bind-Value="_radiologist.IdentityLine1" />
-                    </div>
-                    <ValidationMessage For="@(() => _radiologist.IdentityLine1)" />
-                </div>
-                <div class=" col-md-5 row">
-                    <label for="FullName" class="form-label col-md-5 fs-5">Font Size</label>
-                    <div class="col-md-7">
-                        <InputNumber class="form-control" @bind-Value="_radiologist.Fsize2" />
-                    </div>
-                    <ValidationMessage For="@(() => _radiologist.Fsize2)" />
-                </div>
-            </div>
-            <div class="row my-3">
-                <div class=" col-md-7 row">
-                    <label class="form-label col-md-5 fs-5">Identify-2</label>
-                    <div class="col-md-7 px-3">
-                        <InputText class="form-control" @bind-Value="_radiologist.IdentityLine2" />
-                    </div>
-                    <ValidationMessage For="@(() => _radiologist.IdentityLine2)" />
-                </div>
-                <div class=" col-md-5 row">
-                    <label for="FullName" class="form-label col-md-5 fs-5">Font Size</label>
-                    <div class="col-md-7">
-                        <InputNumber class="form-control" @bind-Value="_radiologist.Fsize3" />
-                    </div>
-                    <ValidationMessage For="@(() => _radiologist.Fsize3)" />
-                </div>
-            </div>
-            <div class="row my-3">
-                <div class=" col-md-7 row">
-                    <label class="form-label col-md-5 fs-5">Identify-3</label>
-                    <div class="col-md-7 px-3">
-                        <InputText class="form-control" @bind-Value="_radiologist.IdentityLine3" />
-                    </div>
-                    <ValidationMessage For="@(() => _radiologist.IdentityLine3)" />
-                </div>
-                <div class=" col-md-5 row">
-                    <label for="FullName" class="form-label col-md-5 fs-5">Font Size</label>
-                    <div class="col-md-7">
-                        <InputNumber class="form-control" @bind-Value="_radiologist.Fsize4" />
-                    </div>
-                    <ValidationMessage For="@(() => _radiologist.Fsize4)" />
-                </div>
-            </div>
-            <div class="row my-3">
-                <div class=" col-md-7 row">
-                    <label class="form-label col-md-5 fs-5">Identify-4</label>
-                    <div class="col-md-7 px-3">
-                        <InputText class="form-control" @bind-Value="_radiologist.IdentityLine4" />
-                    </div>
-                    <ValidationMessage For="@(() => _radiologist.IdentityLine4)" />
-                </div>
-                <div class=" col-md-5 row">
-                    <label for="FullName" class="form-label col-md-5 fs-5">Font Size</label>
-                    <div class="col-md-7">
-                        <InputNumber class="form-control" @bind-Value="_radiologist.Fsize5" />
-                    </div>
-                    <ValidationMessage For="@(() => _radiologist.Fsize5)" />
-                </div>
-            </div>
-            <div class="row my-3">
-                <div class=" col-md-7 row">
-                    <label class="form-label col-md-5 fs-5">Identify-5</label>
-                    <div class="col-md-7 px-3">
-                        <InputText class="form-control" @bind-Value="_radiologist.IdentityLine5" />
-                    </div>
-                    <ValidationMessage For="@(() => _radiologist.IdentityLine5)" />
-                </div>
-                <div class=" col-md-5 row">
-                    <label for="FullName" class="form-label col-md-5 fs-5">Font Size</label>
-                    <div class="col-md-7">
-                        <InputNumber class="form-control" @bind-Value="_radiologist.Fsize6" />
-                    </div>
-                    <ValidationMessage For="@(() => _radiologist.Fsize6)" />
-                </div>
-            </div>
-            <div class="row my-3">
-                <div class=" col-md-7 row">
-                    <label class="form-label col-md-5 fs-5">Identify-6</label>
-                    <div class="col-md-7 px-3">
-                        <InputText class="form-control" @bind-Value="_radiologist.IdentityLine6" />
-                    </div>
-                    <ValidationMessage For="@(() => _radiologist.IdentityLine6)" />
-                </div>
-                <div class=" col-md-5 row">
-                    <label for="FullName" class="form-label col-md-5 fs-5">Font Size</label>
-                    <div class="col-md-7">
-                        <InputNumber class="form-control" @bind-Value="_radiologist.Fsize7" />
-                    </div>
-                    <ValidationMessage For="@(() => _radiologist.Fsize7)" />
-                </div>
-            </div>
-
-            <br />
-
-            <div class="row">
-                <div class="col-lg-6">
-                    <label>Allowed Modalities:</label>
-                    @foreach(var _selectedModality in lSelectedModality)
-                    {
-                        <div class="row d-flex justify-content-center">
-                            <div class="col-md-6 d-flex justify-content-end">
-                                <InputCheckbox id="modality" @bind-Value="_selectedModality.isSelected" />
-                            </div>
-                            <div class="col-md-6">
-                                <label for="modality fs-5" class="">@_selectedModality.modality.Name</label>
-                            </div>
-                        </div>
-                    }
-                </div>
-                <div class="col-lg-6">
-                    <div>
-                        <div>
-                            
-                            @*<InputFile OnChange="@OnFileSelection"></InputFile>*@
-                            <div class="row">
-                                <img src="@imgUrl">
-                            </div>
-                        </div>
-                        <div class="d-grid gap-2 d-flex justify-content-center">
-                            <button @onclick="btnUploadSignature_Clicked" class="btn btn-group-sm btn-primary">Upload Signature</button>
-                            <button @onclick="btnClearSignature_Clicked" class="btn btn-group-sm btn-primary">Clear Signature</button>
-                        </div>
-                    </div>
-
-                    <br />
-
-                    <div>
-                        <div>
-                            <label for="FullName" class="form-label">Will Viewer Open with Default Template?</label>
-                        </div>
-                        <div>
-                            <InputRadioGroup Name="hasDefault" class="d-grid gap-2" @bind-Value="_radiologist.IsViewerWithDefaultTemplate">
-                                <InputRadio Name="hasDefault" Value="true" class="mx-2" />Yes
-                                <InputRadio Name="hasDefault" Value="false" class="mx-2" />No
-                            </InputRadioGroup>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="mt-xxl-5">
-                <div class="row my-3">
-                    <label class="form-label col-md-5 fs-5">Dicom Path</label>
-                    <div class="col-md-7 px-3">
-                        <InputText class="form-control" @bind-Value="_radiologist.DicomImagePath" />
-                    </div>
-                    <ValidationMessage For="@(() => _radiologist.DicomImagePath)" />
-                </div>
-                <div class="row my-3">
-                    <label class="form-label col-md-5 fs-5">Cloud Id</label>
-                    <div class="col-md-7 px-3">
-                        <InputText class="form-control" @bind-Value="_radiologist.RadNextCloudID" />
-                    </div>
-                    <ValidationMessage For="@(() => _radiologist.RadNextCloudID)" />
-                </div>
-            </div>
-
-            <br />
-            
-            <div class="form-group d-grid gap-2 d-flex justify-content-center">
-                <button type="submit" class="btn btn-group-sm btn-primary">Save</button>
-                <button type="button" class="btn btn-group-sm btn-danger" @onclick="closeConsultant">Cancel</button>
-            </div>
-        </EditForm>
+<div class="card">
+    <div class="card-header">
+        <h3>Add/Edit Consultant</h3>
     </div>
-    <div class="col-md-5 card" style="height:100vh;overflow-y:scroll">
-        <table class="table overflow-scroll table-row-bordered table-row-gray-100 align-middle gs-0 gy-3 table-striped table-bordered">
-          <thead>
-            <tr class="fw-bolder text-muted">
-                <th class="w-5px">
-                    <div class="form-check form-check-sm form-check-custom form-check-solid">
-                        <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=" "
-                            hidden
-                        />
-                    </div>
-                </th>
-                <th class="min-w-120px text-center">SrlNo</th>
-                <th class="min-w-140px text-center">Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach (var radiologist in radiologists)
-            {
-                <tr key={@radiologist.RCId}>
-                    <td>
-                        <div class="form-check form-check-sm form-check-custom form-check-solid">
-                            <input id="selectedUSer"  class="form-check-input widget-13-check" type="checkbox" @onchange="@(() => {selectedConsultantId = radiologist.RCId;})" />
+    <div class="row card-body">
+        <div class="col-md-7 card p-4 m-1">
+            <EditForm Model="@_radiologist" OnValidSubmit="SaveConsultant">
+                <DataAnnotationsValidator />
+                <div class="row my-3">
+                    <div class="col-md-7 row">
+                        <label class="form-label col-md-5 fs-5">Consultant Name</label>
+                        <div class="col-md-7 px-3">
+                            <InputText class="form-control" @bind-Value="_radiologist.Name" />
                         </div>
-                    </td>
-                    <td class="text-center">
-                        <p class="text-dark fw-bolder text-hover-primary fs-6">
-                            @radiologist.RCId
-                        </p>
-                    </td>
-                    <td class="text-center">
-                        <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
-                            @radiologist.Name
-                        </p>
-                    </td>
+                        <ValidationMessage For="@(() => _radiologist.Name)" />
+                    </div>
+                    <div class="col-md-5 row">
+                        <label class="form-label col-md-5 fs-5">Font Size</label>
+                        <div class="col-md-7">
+                            <InputNumber class="form-control" @bind-Value="_radiologist.Fsize1" />
+                        </div>
+                        <ValidationMessage For="@(() => _radiologist.Fsize1)" />
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class=" col-md-7 row">
+                        <label class="form-label col-md-5 fs-5">Identify-1</label>
+                        <div class="col-md-7 px-3">
+                            <InputText class="form-control" @bind-Value="_radiologist.IdentityLine1" />
+                        </div>
+                        <ValidationMessage For="@(() => _radiologist.IdentityLine1)" />
+                    </div>
+                    <div class=" col-md-5 row">
+                        <label for="FullName" class="form-label col-md-5 fs-5">Font Size</label>
+                        <div class="col-md-7">
+                            <InputNumber class="form-control" @bind-Value="_radiologist.Fsize2" />
+                        </div>
+                        <ValidationMessage For="@(() => _radiologist.Fsize2)" />
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class=" col-md-7 row">
+                        <label class="form-label col-md-5 fs-5">Identify-2</label>
+                        <div class="col-md-7 px-3">
+                            <InputText class="form-control" @bind-Value="_radiologist.IdentityLine2" />
+                        </div>
+                        <ValidationMessage For="@(() => _radiologist.IdentityLine2)" />
+                    </div>
+                    <div class=" col-md-5 row">
+                        <label for="FullName" class="form-label col-md-5 fs-5">Font Size</label>
+                        <div class="col-md-7">
+                            <InputNumber class="form-control" @bind-Value="_radiologist.Fsize3" />
+                        </div>
+                        <ValidationMessage For="@(() => _radiologist.Fsize3)" />
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class=" col-md-7 row">
+                        <label class="form-label col-md-5 fs-5">Identify-3</label>
+                        <div class="col-md-7 px-3">
+                            <InputText class="form-control" @bind-Value="_radiologist.IdentityLine3" />
+                        </div>
+                        <ValidationMessage For="@(() => _radiologist.IdentityLine3)" />
+                    </div>
+                    <div class=" col-md-5 row">
+                        <label for="FullName" class="form-label col-md-5 fs-5">Font Size</label>
+                        <div class="col-md-7">
+                            <InputNumber class="form-control" @bind-Value="_radiologist.Fsize4" />
+                        </div>
+                        <ValidationMessage For="@(() => _radiologist.Fsize4)" />
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class=" col-md-7 row">
+                        <label class="form-label col-md-5 fs-5">Identify-4</label>
+                        <div class="col-md-7 px-3">
+                            <InputText class="form-control" @bind-Value="_radiologist.IdentityLine4" />
+                        </div>
+                        <ValidationMessage For="@(() => _radiologist.IdentityLine4)" />
+                    </div>
+                    <div class=" col-md-5 row">
+                        <label for="FullName" class="form-label col-md-5 fs-5">Font Size</label>
+                        <div class="col-md-7">
+                            <InputNumber class="form-control" @bind-Value="_radiologist.Fsize5" />
+                        </div>
+                        <ValidationMessage For="@(() => _radiologist.Fsize5)" />
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class=" col-md-7 row">
+                        <label class="form-label col-md-5 fs-5">Identify-5</label>
+                        <div class="col-md-7 px-3">
+                            <InputText class="form-control" @bind-Value="_radiologist.IdentityLine5" />
+                        </div>
+                        <ValidationMessage For="@(() => _radiologist.IdentityLine5)" />
+                    </div>
+                    <div class=" col-md-5 row">
+                        <label for="FullName" class="form-label col-md-5 fs-5">Font Size</label>
+                        <div class="col-md-7">
+                            <InputNumber class="form-control" @bind-Value="_radiologist.Fsize6" />
+                        </div>
+                        <ValidationMessage For="@(() => _radiologist.Fsize6)" />
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class=" col-md-7 row">
+                        <label class="form-label col-md-5 fs-5">Identify-6</label>
+                        <div class="col-md-7 px-3">
+                            <InputText class="form-control" @bind-Value="_radiologist.IdentityLine6" />
+                        </div>
+                        <ValidationMessage For="@(() => _radiologist.IdentityLine6)" />
+                    </div>
+                    <div class=" col-md-5 row">
+                        <label for="FullName" class="form-label col-md-5 fs-5">Font Size</label>
+                        <div class="col-md-7">
+                            <InputNumber class="form-control" @bind-Value="_radiologist.Fsize7" />
+                        </div>
+                        <ValidationMessage For="@(() => _radiologist.Fsize7)" />
+                    </div>
+                </div>
+
+                <br />
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label>Allowed Modalities:</label>
+                        @foreach(var _selectedModality in lSelectedModality)
+                        {
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-6 d-flex justify-content-end" style="padding-top:6px">
+                                    <InputCheckbox id="modality" @bind-Value="_selectedModality.isSelected" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="modality fs-5" class="">@_selectedModality.modality.Name</label>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-lg-6">
+                        <div>
+                            <div>
+                            
+                                @*<InputFile OnChange="@OnFileSelection"></InputFile>*@
+                                <div class="row">
+                                    <img src="@imgUrl">
+                                </div>
+                            </div>
+                            <div class="d-grid gap-2 d-flex justify-content-center">
+                                <button @onclick="btnUploadSignature_Clicked" class="btn btn-group-sm btn-primary">Upload Signature</button>
+                                <button @onclick="btnClearSignature_Clicked" class="btn btn-group-sm btn-primary">Clear Signature</button>
+                            </div>
+                        </div>
+
+                        <br />
+
+                        <div class="d-flex justify-content-center">
+                            <div>
+                                <label for="FullName" class="form-label">Will Viewer Open with Default Template?</label>
+                            </div>
+                            <div>
+                                <InputRadioGroup Name="hasDefault" class="d-grid gap-2" @bind-Value="_radiologist.IsViewerWithDefaultTemplate">
+                                    <InputRadio Name="hasDefault" Value="true" class="mx-2" />Yes
+                                    <InputRadio Name="hasDefault" Value="false" class="mx-2" />No
+                                </InputRadioGroup>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="mt-xxl-5">
+                    <div class="row my-3">
+                        <label class="form-label col-md-5 fs-5">Dicom Path</label>
+                        <div class="col-md-7 px-3">
+                            <InputText class="form-control" @bind-Value="_radiologist.DicomImagePath" />
+                        </div>
+                        <ValidationMessage For="@(() => _radiologist.DicomImagePath)" />
+                    </div>
+                    <div class="row my-3">
+                        <label class="form-label col-md-5 fs-5">Cloud Id</label>
+                        <div class="col-md-7 px-3">
+                            <InputText class="form-control" @bind-Value="_radiologist.RadNextCloudID" />
+                        </div>
+                        <ValidationMessage For="@(() => _radiologist.RadNextCloudID)" />
+                    </div>
+                </div>
+
+                <br />
+            
+                <div class="form-group d-grid gap-2 d-flex justify-content-center">
+                    <button type="submit" class="btn btn-group-sm btn-primary">Save</button>
+                    <button type="button" class="btn btn-group-sm btn-danger" @onclick="closeConsultant">Cancel</button>
+                </div>
+            </EditForm>
+        </div>
+        <div class="col-md-5 card p-4 m-1" style="height:100vh;overflow-y:scroll">
+            <table class="table overflow-scroll table-row-bordered table-row-gray-100 align-middle gs-0 gy-3 table-striped table-bordered">
+              <thead>
+                <tr class="fw-bolder text-muted">
+                    <th class="w-5px">
+                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                value=" "
+                                hidden
+                            />
+                        </div>
+                    </th>
+                    <th class="min-w-120px text-center">SrlNo</th>
+                    <th class="min-w-140px text-center">Name</th>
                 </tr>
-            }
-            </tbody>
-        </table>
+              </thead>
+              <tbody>
+                @foreach (var radiologist in radiologists)
+                {
+                    <tr key={@radiologist.RCId}>
+                        <td>
+                            <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                <input id="selectedUSer"  class="form-check-input widget-13-check" type="checkbox" @onchange="@(() => {selectedConsultantId = radiologist.RCId;})" />
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <p class="text-dark fw-bolder text-hover-primary fs-6">
+                                @radiologist.RCId
+                            </p>
+                        </td>
+                        <td class="text-center">
+                            <p class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
+                                @radiologist.Name
+                            </p>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
 @code {
-
     private List<VMReportConsultant>? radiologists = new();
     private ReportConsultant? _radiologist = new();
     private int selectedConsultantId = new();

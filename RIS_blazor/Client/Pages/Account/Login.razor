@@ -6,15 +6,15 @@
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
 
-<h3>Login</h3>
 
-<div class="row card">
-    <div class="col-6 p-4">
-        <img src="img/Emis_Slide.jpg"/>
-    </div>
-    <div class="card col-6">
-        <h4 class="card-header">Login</h4>
-        <div class="card-body">
+<div class="d-flex justify-content-center card">
+    <h4 class="card-header">Login</h4>
+    <div class="row card-body">
+        <div class="col-5 p-4">
+            <img src="img/Emis_Slide.jpg"/>
+        </div>
+        <div class="col-1"></div>
+        <div class="col-5 p-4">
             <EditForm Model="@loginInfo" OnValidSubmit="CheckLogin">
                 <DataAnnotationsValidator />
                 <div class="form-group">
@@ -22,13 +22,19 @@
                     <InputText @bind-Value="loginInfo.userName" class="form-control" />
                     <ValidationMessage For="@(() => loginInfo.userName)" />
                 </div>
+
+                <br />
+
                 <div class="form-group">
                     <label>Password</label>
                     <InputText @bind-Value="loginInfo.password" type="password" class="form-control" />
                     <ValidationMessage For="@(() => loginInfo.password)" />
                 </div>
+
+                <br />
+
                 <div class="d-flex justify-content-center">
-                    <button disabled="@loading" class="btn btn-primary">
+                    <button disabled="@loading" type="submit" class="btn btn-primary">
                         @if (loading)
                         {
                             <span class="spinner-border spinner-border-sm mr-1"></span>
@@ -36,6 +42,28 @@
                         Login
                     </button>
                     <NavLink href="/register" class="btn btn-link">Register</NavLink>
+                </div>
+
+                <br />
+                <hr />
+                <br />
+
+                <div class="text-center">
+                    <NavLink href="/forget">
+                    Forgot Password ?
+                    </NavLink>
+                    <br />
+                    <p>Please contact support for password recovery</p>
+                </div>
+
+                <div class="text-center">
+                    <h3>NEED HELP?</h3>
+                    <p>
+                    Please Contact us regarding any issues related to the report
+                    01811383839, 01788320633, 01766943020.
+                    </p>
+                    <br />
+                    <p class="fs-5">Email: emedicalbd2014@gmail.com</p>
                 </div>
             </EditForm>
         </div>
@@ -57,11 +85,12 @@
 
     }
 
-    private async void CheckLogin()
+    private async Task CheckLogin()
     {
         loading = true;
         string strloginInfo = $"userName={loginInfo.userName}&password={loginInfo.password}";
-        string? result = await Http.GetFromJsonAsync<string>("Riswork/Login?" + strloginInfo);
+        string result;
+        result = await Http.GetFromJsonAsync<String>("Riswork/Login?" + strloginInfo);
         if(result != null)
         {
             NavigationManager.NavigateTo("/", true);

@@ -13,18 +13,20 @@
     <p><em>Loading...</em></p>
 }
 else
-{
-    <div class="row card">
-        <div class="card-title">
-            <h3>Create Role</h3>
-        </div>
-        <div class="col-md-6 card-body">
+{<div>
+    <div class="card-header">
+        <h3>Create Role</h3>
+    </div>
+
+    <div class="row card-body">
+        <div class="col-md-6 card m-1">
             <EditForm Model="@_role" OnValidSubmit="SaveRole">
                 <div>
+                    <br />
                     @foreach(var menu in menus)
                     {
                         <div class="row d-flex justify-content-center">
-                            <div class="col-md-4 d-flex justify-content-end">
+                            <div class="col-md-4 d-flex justify-content-end" style="padding-top:6px;">
                                 <InputCheckbox id="menu" @bind-Value="menu.isSelectedMenu"></InputCheckbox>
                             </div>
                             <div class="col-md-8">
@@ -46,7 +48,8 @@ else
                 </div>
             </EditForm>
         </div>
-        <div class="col-md-6 px-3">
+        <div class="col-md-6 card p-4 m-1">
+            <br />
             <div class="table table-responsive">
                 <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3 table-striped table-bordered">
                     <thead>
@@ -90,6 +93,7 @@ else
             </div>
         </div>
     </div>
+</div>
 }
 
 
